@@ -1,7 +1,6 @@
 import './page/sw-swag-testdemo-list';
 import './page/sw-swag-testdemo-detail';
 import './acl';
-import deDE from './snippet/de-DE';
 import enGB from './snippet/en-GB';
 import defaultSearchConfiguration from './default-search-configuration';
 
@@ -9,7 +8,7 @@ const { Module } = Shopware;
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Shopware.Module.register('sw-swag-testdemo', {
-    type: 'core',
+    type: 'plugin',
     name: 'FirstTestDemo',
     title: 'sw-swag-testdemo.general.mainMenuItemGeneral',
     description: 'sw-property.general.descriptionTextModule',
@@ -21,7 +20,6 @@ Shopware.Module.register('sw-swag-testdemo', {
     entity: 'test_demo',
 
     snippets: {
-        'de-DE': deDE,
         'en-GB': enGB
     },
 

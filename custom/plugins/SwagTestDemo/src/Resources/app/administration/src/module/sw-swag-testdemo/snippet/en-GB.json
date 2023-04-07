@@ -1,7 +1,7 @@
 {
     "sw-swag-testdemo": {
         "general": {
-            "mainMenuItemGeneral": "My first test demo module",
+            "mainMenuItemGeneral": "Test demo module",
             "descriptionTextModule": "This is a test demo module here"
         }
     }
