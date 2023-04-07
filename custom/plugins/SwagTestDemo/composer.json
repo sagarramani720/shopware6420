@@ -1,0 +1,24 @@
+{
+  "name": "swag/first-test-demo",
+    "authors": [
+        {
+            "name": "Sagar",
+            "role": "developer"
+        }
+    ],
+  "description": "First Test Demo plugin",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "SwagTestDemo\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "SwagTestDemo\\SwagTestDemo",
+    "label": {
+      "de-DE": "First test demo plugin",
+      "en-GB": "First test demo plugin"
+    }
+  }
+}
