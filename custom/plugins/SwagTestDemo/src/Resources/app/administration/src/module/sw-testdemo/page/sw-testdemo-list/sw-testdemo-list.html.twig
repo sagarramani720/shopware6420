@@ -1,11 +1,11 @@
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-{% block sw_swag_testdemo_list %}
+{% block sw_testdemo_list %}
     <sw-page class="sw-testdemo-list">
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_swag_testdemo_list_search_bar %}
+        {% block sw_testdemo_list_search_bar %}
             <template #search-bar>
                 <sw-search-bar
-                    initial-search-type="swag_testdemo"
+                    initial-search-type="test_demo"
                     :initial-search="term"
                     @search="onSearch"
                 />
@@ -13,24 +13,24 @@
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_swag_testdemo_list_smart_bar_header %}
+        {% block sw_testdemo_list_smart_bar_header %}
             <template #smart-bar-header>
                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                {% block sw_swag_testdemo_list_smart_bar_header_title %}
+                {% block sw_testdemo_list_smart_bar_header_title %}
                     <h2>
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                        {% block sw_swag_testdemo_list_smart_bar_header_title_text %}
+                        {% block sw_testdemo_list_smart_bar_header_title_text %}
                             {{ $tc('sw-testdemo.list.textTestdemoOverview') }}
                         {% endblock %}
 
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                        {% block sw_swag_testdemo_list_smart_bar_header_amount %}
-                            <span
-                                v-if="!isLoading"
-                                class="sw-page__smart-bar-amount"
-                            >
-                ({{ total }})
-            </span>
+                        {% block sw_testdemo_list_smart_bar_header_amount %}
+                        <span
+                            v-if="!isLoading"
+                            class="sw-page__smart-bar-amount"
+                        >
+                             ({{ total }})
+                        </span>
                         {% endblock %}
                     </h2>
                 {% endblock %}
@@ -38,18 +38,16 @@
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_swag_testdemo_list_actions %}
+        {% block sw_testdemo_list_actions %}
             <template #smart-bar-actions>
                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                {% block sw_swag_testdemo_list_smart_bar_actions %}
+                {% block sw_testdemo_list_smart_bar_actions %}
                     <sw-button
                         v-tooltip.bottom="{
-                message: $tc('sw-privileges.tooltip.warning'),
-                disabled: acl.can('swag_testdemo.creator'),
-                showOnDisabledElements: true
-            }"
-                        :router-link="{ name: 'sw.swag.testdemo.create' }"
-                        :disabled="!acl.can('swag_testdemo.creator')"
+                        message: $tc('sw-privileges.tooltip.warning'),
+                        showOnDisabledElements: true
+                        }"
+                        :router-link="{ name: 'sw.testdemo.create' }"
                         class="sw-testdemo-list__add-testdemo"
                         variant="primary"
                     >
@@ -60,7 +58,7 @@
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_swag_testdemol_list_language_switch %}
+        {% block sw_testdemo_list_language_switch %}
             <template #language-switch>
                 <sw-language-switch @on-change="onChangeLanguage" />
             </template>
@@ -68,14 +66,14 @@
 
         <template #content>
             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-            {% block sw_manufacturer_list_content %}
+            {% block sw_testdemo_list_content %}
                 <div class="sw-testdemo-list__content">
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_swag_testdemo_list_grid %}
+                    {% block sw_testdemo_list_grid %}
                         <sw-entity-listing
                             v-if="entitySearchable"
                             class="sw-testdemo-list__grid"
-                            detail-route="sw.swag.testdemo.detail"
+                            detail-route="sw.testdemo.detail"
                             :is-loading="isLoading"
                             :columns="testdemoColumns"
                             :repository="testdemoRepository"
@@ -84,17 +82,13 @@
                             :sort-by="currentSortBy"
                             :sort-direction="sortDirection"
                             :disable-data-fetching="true"
-                            :allow-edit="acl.can('swag_testdemo.editor')"
-                            :allow-inline-edit="acl.can('swag_testdemo.editor')"
-                            :allow-delete="acl.can('swag_testdemo.deleter')"
-                            :show-selections="acl.can('swag_testdemo.deleter')"
                             identifier="sw-testdemo-list"
                             @update-records="updateTotal"
                             @page-change="onPageChange"
                             @column-sort="onSortColumn"
                         >
                             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_swag_testdemo_list_grid_columns_name_preview %}
+                            {% block sw_testdemo_list_grid_columns_name_preview %}
                                 <template #preview-name="{ item }">
                                     <sw-media-preview-v2 :source="item.mediaId" />
                                 </template>
@@ -103,7 +97,7 @@
                     {% endblock %}
 
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_swag_testdemo_list_empty_state %}
+                    {% block sw_testdemo_list_empty_state %}
                         <sw-empty-state
                             v-if="!isLoading && !total && isValidTerm(term)"
                             :title="$tc('sw-empty-state.messageNoResultTitle')"
@@ -123,10 +117,9 @@
 
                     {# @deprecated tag:v6.5.0 - Will be removed #}
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_swag_testdemo_list_grid_loader %}{% endblock %}
+                    {% block sw_testdemo_list_grid_loader %}{% endblock %}
                 </div>
             {% endblock %}
-
         </template>
     </sw-page>
 {% endblock %}

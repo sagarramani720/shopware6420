@@ -1,0 +1,47 @@
+{
+    "sw-testdemo": {
+        "general": {
+            "mainMenuItemList": "Testdemo",
+            "mainMenuItemGeneral": "testdemo",
+            "placeholderSearchBar": "Search testdemo..."
+        },
+        "list": {
+            "textTestdemoOverview": "Testdemo",
+            "textTotalTestdemo": "No testdemo | One testdemo | {count} testdemo",
+            "buttonAddTestdemo": "Add test demo",
+            "columnName": "Name",
+            "columnLink": "Website",
+            "columnCity": "City",
+            "columnActive": "Active",
+            "columnCountry": "Country",
+            "columnState": "State",
+            "columnMedia": "Image",
+            "columnProduct": "Product"
+        },
+        "detail": {
+            "textHeadline": "New testdemo",
+            "textMediaSelection": "Media selection",
+            "buttonCancel": "Cancel",
+            "buttonSave": "Save",
+            "cardTitleTestdemoInfo": "Testdemo information",
+            "labelName": "Name",
+            "cityLabelName": "City",
+            "cityPlaceholderName": "Enter testdemo city...",
+            "labelDescription": "Description",
+            "labelLink": "Website",
+            "placeholderName": "Enter testdemo name...",
+            "placeholderDescription": "Enter description...",
+            "placeholderLink": "Enter testdemo website...",
+            "messageSaveSuccess": "Testdemo \"{name}\" has been saved.",
+            "labelLogo": "Logo",
+            "labelUseAsLogo": "Use as Logo"
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "test_demo": {
+                "label": "Testdemo"
+            }
+        }
+    }
+}

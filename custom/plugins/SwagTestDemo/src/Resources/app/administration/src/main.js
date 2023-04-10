@@ -1,2 +1,2 @@
-import './module/sw-swag-testdemo';
+import './module/sw-testdemo';
 
