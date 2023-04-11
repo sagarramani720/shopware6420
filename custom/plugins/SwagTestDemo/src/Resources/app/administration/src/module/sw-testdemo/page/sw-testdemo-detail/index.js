@@ -5,7 +5,6 @@ import template from './sw-testdemo-detail.html.twig';
 import './sw-testdemo-detail.scss';
 
 const { Component, Mixin, Data: { Criteria } } = Shopware;
-
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
@@ -33,9 +32,17 @@ Component.register('sw-testdemo-detail', {
         },
     },
 
+    disabled: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+
     data() {
         return {
             testdemo: null,
+            country: null,
+            states: [],
             customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
@@ -63,6 +70,14 @@ Component.register('sw-testdemo-detail', {
 
         mediaRepository() {
             return this.repositoryFactory.create('media');
+        },
+
+        countryRepository() {
+            return this.repositoryFactory.create('country');
+        },
+
+        countryStateRepository() {
+            return this.repositoryFactory.create('country_state');
         },
 
         customFieldSetRepository() {
@@ -102,11 +117,68 @@ Component.register('sw-testdemo-detail', {
                 appearance: 'light',
             };
         },
-        ...mapPropertyErrors('testdemo', ['name','city','active','country','state','product']),
+        ...mapPropertyErrors('testdemo', [
+            'name',
+            'city',
+            'countryId',
+            'active',
+            'countryStateId',
+            'productId',
+            'mediaId'
+        ]),
     },
+
+    hasStates() {
+        return this.states.length > 0;
+    },
+
+    countryId: {
+        get() {
+            return this.address.countryId;
+        },
+
+        set(countryId) {
+            this.address.countryId = countryId;
+        },
+    },
+
+    countryCriteria() {
+        const criteria = new Criteria(1, 25);
+        criteria.addSorting(Criteria.sort('position', 'ASC'));
+        return criteria;
+    },
+
+    stateCriteria() {
+        if (!this.countryId) {
+            return null;
+        }
+
+        const criteria = new Criteria(1, 25);
+        criteria.addFilter(Criteria.equals('countryId', this.countryId));
+        return criteria;
+    },
+
     watch: {
         testdemoId() {
             this.createdComponent();
+        },
+        countryId: {
+            immediate: true,
+            handler(newId, oldId) {
+                if (typeof oldId !== 'undefined') {
+                    this.address.countryStateId = null;
+                }
+
+                if (!this.countryId) {
+                    this.country = null;
+                    return Promise.resolve();
+                }
+
+                return this.countryRepository.get(this.countryId).then((country) => {
+                    this.country = country;
+                    this.getCountryStates();
+                });
+            },
         },
     },
 
@@ -115,6 +187,16 @@ Component.register('sw-testdemo-detail', {
     },
 
     methods: {
+        getCountryStates() {
+            if (!this.country) {
+                return Promise.resolve();
+            }
+
+            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
+                this.states = response;
+            });
+        },
+
         createdComponent() {
             Shopware.ExtensionAPI.publishData({
                 id: 'sw-testdemo-detail__testdemo',

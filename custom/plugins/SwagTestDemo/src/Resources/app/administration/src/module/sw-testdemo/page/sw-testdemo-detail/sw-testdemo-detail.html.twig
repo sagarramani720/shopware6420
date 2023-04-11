@@ -62,7 +62,6 @@
                 </template>
 
                 <template v-else>
-
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                     {% block sw_testdemo_detail_content_language_info %}
                         <sw-language-info
@@ -82,9 +81,8 @@
                                 gap="0 30px"
                             >
                                 <div class="sw-testdemo-detail__base-info-wrapper">
-
                                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_base_info_field_name %}
+                                {% block sw_testdemo_detail_base_info_name_field %}
                                     <sw-field
                                         v-model="testdemo.name"
                                         type="text"
@@ -98,12 +96,12 @@
                                 {% endblock %}
 
                                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_base_info_field_city %}
+                                {% block sw_testdemo_detail_base_info_city_field %}
                                     <sw-field
                                         v-model="testdemo.city"
                                         type="text"
-                                        :label="$tc('sw-testdemo.detail.cityLabelName')"
-                                        :placeholder="placeholder(testdemo, 'city', $tc('sw-testdemo.detail.cityPlaceholderName'))"
+                                        :label="$tc('sw-testdemo.detail.labelCity')"
+                                        :placeholder="placeholder(testdemo, 'city', $tc('sw-testdemo.detail.placeholderCity'))"
                                         name="city"
                                         validation="required"
                                         required
@@ -111,34 +109,94 @@
                                     />
                                 {% endblock %}
 
-                            </div>
+                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                {% block sw_testdemo_form_country_field %}
+                                    <sw-entity-single-select
+                                        v-model="testdemo.countryId"
+                                        class="sw-testdemo-form__country-select"
+                                        entity="country"
+                                        :label="$tc('sw-testdemo.detail.labelCountry')"
+                                        :placeholder="$tc('sw-testdemo.detail.placeholderCountry')"
+                                        validation="required"
+                                        required
+                                        :error="testdemoCountryIdError"
+                                        show-clearable-button
+                                    />
+                                {% endblock %}
 
                                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_testdemo_detail_logo_upload %}
-                                <sw-upload-listener
-                                    :upload-tag="mediaUploadTag"
-                                    auto-upload
-                                    @media-upload-finish="setMediaItem"
-                                />
-                                <sw-media-upload-v2
-                                    class="sw-testdemo-detai l__logo-upload"
-                                    :source="testdemo.mediaId"
-                                    :allow-multi-select="false"
-                                    variant="regular"
-                                    :upload-tag="mediaUploadTag"
-                                    :label="$tc('sw-testdemo.detail.labelLogo')"
-                                    :default-folder="testdemoRepository.entityName"
-                                    @sw-media-upload-v2-media-upload-success="setMediaItem"
-                                    @media-drop="onDropMedia"
-                                    @media-upload-sidebar-open="openMediaSidebar"
-                                    @media-upload-remove-image="onUnlinkLogo"
-                                />
-                            {% endblock %}
+                                {% block sw_testdemo_form_state_field %}
+                                    <div
+                                        v-if="testdemo.countryId && hasStates"
+                                        class="sw-testdemo-form__state-select-placeholder"
+                                    >
+                                        <sw-entity-single-select
+                                            v-model="testdemo.countryStateId"
+                                            class="sw-testdemo-form__state-select"
+                                            entity="country_state"
+                                            :label="$tc('sw-testdemo.detail.labelState')"
+                                            :placeholder="$tc('sw-testdemo.detail.placeholderState')"
+                                            :required="country && country.forceStateInRegistration"
+                                            :error="testdemoCountryStateIdError"
+                                            show-clearable-button
+                                        />
+                                    </div>
+                                {% endblock %}
+
+                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                {% block sw_testdemo_detail_base_info_logo_upload_field %}
+                                    <sw-upload-listener
+                                        :upload-tag="mediaUploadTag"
+                                        auto-upload
+                                        @media-upload-finish="setMediaItem"
+                                        validation="required"
+                                        required
+                                        :error="testdemoMediaIdError"
+                                    />
+                                    <sw-media-upload-v2
+                                        class="sw-testdemo-detail__logo-upload"
+                                        v-model="testdemo.imageId"
+                                        :source="testdemo.mediaId"
+                                        :allow-multi-select="false"
+                                        variant="regular"
+                                        :upload-tag="mediaUploadTag"
+                                        :label="$tc('sw-testdemo.detail.labelLogo')"
+                                        :default-folder="testdemoRepository.entityName"
+                                        @sw-media-upload-v2-media-upload-success="setMediaItem"
+                                        @media-drop="onDropMedia"
+                                        @media-upload-sidebar-open="openMediaSidebar"
+                                        @media-upload-remove-image="onUnlinkLogo"
+                                    />
+                                {% endblock %}
+
+                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                {% block sw_testdemo_detail_base_info_product_field %}
+                                    <sw-entity-tag-select
+                                        v-model="testdemo.product"
+                                        :label="$tc('sw-testdemo.detail.labelProduct')"
+                                        :placeholder="$tc('sw-testdemo.detail.placeholderProduct')"
+                                        name="product"
+                                        validation="required"
+                                        required
+                                        :error="testdemoProductIdError"
+                                    />
+                                {% endblock %}
+
+                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                {% block sw_testdemo_detail_base_info_active_field %}
+                                    <sw-field
+                                        v-model="testdemo.active"
+                                        type="switch"
+                                        bordered
+                                        :label="$tc('sw-testdemo.detail.labelActive')"
+                                    />
+                                {% endblock %}
+                            </div>
                         </sw-container>
                     </sw-card>
                 {% endblock %}
 
-                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_testdemo_detail_custom_field_sets %}
                 <sw-card
                     v-if="customFieldSets.length > 0"
@@ -157,24 +215,24 @@
         </sw-card-view>
     {% endblock %}
 
-        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_testdemo_detail_sidebar %}
-            <template slot="sidebar">
-            <sw-sidebar :propagate-width="true">
-                <sw-sidebar-media-item
-                    ref="mediaSidebarItem"
+    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+    {% block sw_testdemo_detail_sidebar %}
+        <template slot="sidebar">
+        <sw-sidebar :propagate-width="true">
+            <sw-sidebar-media-item
+                ref="mediaSidebarItem"
+            >
+                <template
+                    slot="context-menu-items"
+                    slot-scope="media"
                 >
-                    <template
-                        slot="context-menu-items"
-                        slot-scope="media"
-                    >
-                        <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
-                            {{ $tc('sw-testdemo.detail.labelUseAsLogo') }}
-                        </sw-context-menu-item>
-                    </template>
-                </sw-sidebar-media-item>
-            </sw-sidebar>
-        </template>
-        {% endblock %}
+                    <sw-context-menu-item @click="setMediaFromSidebar(media.mediaItem)">
+                        {{ $tc('sw-testdemo.detail.labelUseAsLogo') }}
+                    </sw-context-menu-item>
+                </template>
+            </sw-sidebar-media-item>
+        </sw-sidebar>
+    </template>
+    {% endblock %}
     </sw-page>
 {% endblock %}

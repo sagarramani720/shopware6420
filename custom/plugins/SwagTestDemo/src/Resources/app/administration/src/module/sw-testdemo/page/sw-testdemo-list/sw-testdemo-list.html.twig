@@ -9,7 +9,7 @@
                     :initial-search="term"
                     @search="onSearch"
                 />
-            </template>
+              </template>
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
@@ -25,12 +25,12 @@
 
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                         {% block sw_testdemo_list_smart_bar_header_amount %}
-                        <span
-                            v-if="!isLoading"
-                            class="sw-page__smart-bar-amount"
-                        >
-                             ({{ total }})
-                        </span>
+                            <span
+                                v-if="!isLoading"
+                                class="sw-page__smart-bar-amount"
+                            >
+                ({{ total }})
+            </span>
                         {% endblock %}
                     </h2>
                 {% endblock %}
@@ -44,9 +44,9 @@
                 {% block sw_testdemo_list_smart_bar_actions %}
                     <sw-button
                         v-tooltip.bottom="{
-                        message: $tc('sw-privileges.tooltip.warning'),
-                        showOnDisabledElements: true
-                        }"
+                message: $tc('sw-privileges.tooltip.warning'),
+                showOnDisabledElements: true
+            }"
                         :router-link="{ name: 'sw.testdemo.create' }"
                         class="sw-testdemo-list__add-testdemo"
                         variant="primary"
