@@ -1,8 +1,8 @@
 {
     "sw-testdemo": {
         "general": {
-            "mainMenuItemList": "Testdemo",
-            "mainMenuItemGeneral": "testdemo",
+            "mainMenuItemList": "Test demo",
+            "mainMenuItemGeneral": "Test demo",
             "placeholderSearchBar": "Search testdemo..."
         },
         "list": {
@@ -31,8 +31,8 @@
             "labelState": "State",
             "labelImage": "Image",
             "labelProduct": "Product",
-            "placeholderName": "Enter testdemo name...",
-            "placeholderCity": "Enter testdemo city...",
+            "placeholderName": "Enter name...",
+            "placeholderCity": "Enter city...",
             "placeholderCountry": "Select country...",
             "placeholderState": "Select state...",
             "placeholderImage": "Upload image file...",

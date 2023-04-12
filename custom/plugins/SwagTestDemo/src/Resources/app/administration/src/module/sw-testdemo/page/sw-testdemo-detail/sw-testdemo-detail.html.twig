@@ -110,112 +110,136 @@
                                 {% endblock %}
 
                                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_form_country_field %}
+                                {% block sw_testdemo_detail_country_field %}
                                     <sw-entity-single-select
                                         v-model="testdemo.countryId"
-                                        class="sw-testdemo-form__country-select"
+                                        class="sw-testdemo_detail__country-select"
                                         entity="country"
+                                        :criteria="countryCriteria"
                                         :label="$tc('sw-testdemo.detail.labelCountry')"
                                         :placeholder="$tc('sw-testdemo.detail.placeholderCountry')"
                                         validation="required"
                                         required
                                         :error="testdemoCountryIdError"
+                                        :disabled="disabled"
                                         show-clearable-button
                                     />
                                 {% endblock %}
 
                                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_form_state_field %}
+                                {% block sw_testdemo_detail_state_field %}
                                     <div
-                                        v-if="testdemo.countryId && hasStates"
-                                        class="sw-testdemo-form__state-select-placeholder"
+                                        class="sw-testdemo_detail__state-select-placeholder"
                                     >
                                         <sw-entity-single-select
                                             v-model="testdemo.countryStateId"
-                                            class="sw-testdemo-form__state-select"
+                                            class="sw-testdemo_detail__state-select"
                                             entity="country_state"
+                                            :criteria="stateCriteria"
                                             :label="$tc('sw-testdemo.detail.labelState')"
                                             :placeholder="$tc('sw-testdemo.detail.placeholderState')"
                                             :required="country && country.forceStateInRegistration"
                                             :error="testdemoCountryStateIdError"
+                                            :disabled="disabled"
                                             show-clearable-button
                                         />
                                     </div>
                                 {% endblock %}
 
                                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_base_info_logo_upload_field %}
-                                    <sw-upload-listener
-                                        :upload-tag="mediaUploadTag"
-                                        auto-upload
-                                        @media-upload-finish="setMediaItem"
-                                        validation="required"
-                                        required
-                                        :error="testdemoMediaIdError"
-                                    />
-                                    <sw-media-upload-v2
-                                        class="sw-testdemo-detail__logo-upload"
-                                        v-model="testdemo.imageId"
-                                        :source="testdemo.mediaId"
-                                        :allow-multi-select="false"
-                                        variant="regular"
-                                        :upload-tag="mediaUploadTag"
-                                        :label="$tc('sw-testdemo.detail.labelLogo')"
-                                        :default-folder="testdemoRepository.entityName"
-                                        @sw-media-upload-v2-media-upload-success="setMediaItem"
-                                        @media-drop="onDropMedia"
-                                        @media-upload-sidebar-open="openMediaSidebar"
-                                        @media-upload-remove-image="onUnlinkLogo"
-                                    />
-                                {% endblock %}
-
-                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_base_info_product_field %}
-                                    <sw-entity-tag-select
-                                        v-model="testdemo.product"
+                                {% block sw_testdemo_detail_product_select_field %}
+                                    <sw-entity-multi-select
+                                        :disabled="disabled"
+                                        :help-text="helpText"
+                                        :entity-collection="productCollection"
+                                        :criteria="criteria"
+                                        @change="updateCollection"
+                                        v-model="testdemo.productId"
+                                        :options="product"
+                                        class="sw-testdemo_detail__product-select"
+                                        entity="product"
                                         :label="$tc('sw-testdemo.detail.labelProduct')"
                                         :placeholder="$tc('sw-testdemo.detail.placeholderProduct')"
-                                        name="product"
                                         validation="required"
                                         required
                                         :error="testdemoProductIdError"
-                                    />
+                                        show-clearable-button
+                                    >
+
+                                    <template
+                                        v-if="productActiveState"
+                                        #result-label-preview="{ item }"
+                                    >
+                                        <sw-icon
+                                            class="sw-testdemo-product-select__active-icon"
+                                            size="6"
+                                            :color="getActiveIconColor(item)"
+                                            name="solid-circle"
+                                        />
+                                    </template>
+                                </sw-entity-multi-select>
                                 {% endblock %}
 
-                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_base_info_active_field %}
-                                    <sw-field
-                                        v-model="testdemo.active"
-                                        type="switch"
-                                        bordered
-                                        :label="$tc('sw-testdemo.detail.labelActive')"
-                                    />
-                                {% endblock %}
+                                {% block sw_testdemo_detail_base_info_logo_upload_field %}
+                                <sw-upload-listener
+                                    :upload-tag="mediaUploadTag"
+                                    auto-upload
+                                    @media-upload-finish="setMediaItem"
+                                    validation="required"
+                                    required
+                                    :error="testdemoMediaIdError"
+                                />
+                                <sw-media-upload-v2
+                                    class="sw-testdemo-detail__logo-upload"
+                                    v-model="testdemo.imageId"
+                                    :source="testdemo.mediaId"
+                                    :allow-multi-select="false"
+                                    variant="regular"
+                                    :upload-tag="mediaUploadTag"
+                                    :label="$tc('sw-testdemo.detail.labelLogo')"
+                                    :default-folder="testdemoRepository.entityName"
+                                    @sw-media-upload-v2-media-upload-success="setMediaItem"
+                                    @media-drop="onDropMedia"
+                                    @media-upload-sidebar-open="openMediaSidebar"
+                                    @media-upload-remove-image="onUnlinkLogo"
+                                />
+                            {% endblock %}
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_testdemo_detail_base_info_active_field %}
+                                <sw-field
+                                    v-model="testdemo.active"
+                                    type="switch"
+                                    bordered
+                                    :label="$tc('sw-testdemo.detail.labelActive')"
+                                />
+                            {% endblock %}
+
                             </div>
                         </sw-container>
                     </sw-card>
                 {% endblock %}
 
-                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                {% block sw_testdemo_detail_custom_field_sets %}
-                <sw-card
-                    v-if="customFieldSets.length > 0"
-                    position-identifier="sw-testdemo-detail-custom-field-sets"
-                    :title="$tc('sw-settings-custom-field.general.mainMenuItemGeneral')"
-                    :is-loading="testdemoIsLoading"
-                >
-                    <sw-custom-field-set-renderer
+                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                    {% block sw_testdemo_detail_custom_field_sets %}
+                    <sw-card
+                        v-if="customFieldSets.length > 0"
+                        position-identifier="sw-testdemo-detail-custom-field-sets"
+                        :title="$tc('sw-settings-custom-field.general.mainMenuItemGeneral')"
+                        :is-loading="testdemoIsLoading"
+                    >
+                        <sw-custom-field-set-renderer
                         v-if="testdemo"
                         :entity="testdemo"
                         :sets="customFieldSets"
-                    />
+                        />
                 </sw-card>
                 {% endblock %}
             </template>
         </sw-card-view>
     {% endblock %}
 
-    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_testdemo_detail_sidebar %}
         <template slot="sidebar">
         <sw-sidebar :propagate-width="true">

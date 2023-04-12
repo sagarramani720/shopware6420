@@ -7,7 +7,6 @@ import template from './sw-testdemo-list.html.twig';
 const { Component, Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
 
-// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-testdemo-list', {
     template,
 

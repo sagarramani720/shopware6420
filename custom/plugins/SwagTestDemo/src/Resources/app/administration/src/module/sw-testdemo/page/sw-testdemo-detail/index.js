@@ -1,17 +1,19 @@
 /*
  * @package inventory
  */
+
 import template from './sw-testdemo-detail.html.twig';
 import './sw-testdemo-detail.scss';
 
 const { Component, Mixin, Data: { Criteria } } = Shopware;
+
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-testdemo-detail', {
-   template,
+    template,
 
-    inject: ['repositoryFactory'],
+    inject: ['repositoryFactory', 'acl'],
 
     mixins: [
         Mixin.getByName('placeholder'),
@@ -26,16 +28,34 @@ Component.register('sw-testdemo-detail', {
 
     props: {
         testdemoId: {
+            type: Array,
+            required: false,
+            default: null,
+        },
+
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
+
+        criteria: {
+            type: Object,
+            required: false,
+            default: undefined,
+        },
+
+        helpText: {
             type: String,
             required: false,
             default: null,
         },
-    },
 
-    disabled: {
-        type: Boolean,
-        required: false,
-        default: false,
+        productActiveState: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
 
     data() {
@@ -46,6 +66,10 @@ Component.register('sw-testdemo-detail', {
             customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
+            productId: {
+                id: 'container',
+                class: 'wrapper'
+            }
         };
     },
 
@@ -60,6 +84,18 @@ Component.register('sw-testdemo-detail', {
             return this.placeholder(this.testdemo, 'name');
         },
 
+        countryRepository() {
+            return this.repositoryFactory.create('country');
+        },
+
+        countryStateRepository() {
+            return this.repositoryFactory.create('country_state');
+        },
+
+        productRepository() {
+            return this.repositoryFactory.create('product');
+        },
+
         testdemoIsLoading() {
             return this.isLoading || this.testdemo == null;
         },
@@ -72,14 +108,6 @@ Component.register('sw-testdemo-detail', {
             return this.repositoryFactory.create('media');
         },
 
-        countryRepository() {
-            return this.repositoryFactory.create('country');
-        },
-
-        countryStateRepository() {
-            return this.repositoryFactory.create('country_state');
-        },
-
         customFieldSetRepository() {
             return this.repositoryFactory.create('custom_field_set');
         },
@@ -89,6 +117,7 @@ Component.register('sw-testdemo-detail', {
             criteria.addFilter(
                 Criteria.equals('relations.entityName', 'test_demo'),
             );
+
             return criteria;
         },
 
@@ -97,16 +126,19 @@ Component.register('sw-testdemo-detail', {
         },
 
         tooltipSave() {
+            if (this.acl.can('test_demo.editor')) {
                 const systemKey = this.$device.getSystemKey();
 
                 return {
                     message: `${systemKey} + S`,
                     appearance: 'light',
                 };
+            }
 
             return {
                 showDelay: 300,
                 message: this.$tc('sw-privileges.tooltip.warning'),
+                disabled: this.acl.can('order.editor'),
                 showOnDisabledElements: true,
             };
         },
@@ -117,56 +149,54 @@ Component.register('sw-testdemo-detail', {
                 appearance: 'light',
             };
         },
+
         ...mapPropertyErrors('testdemo', [
             'name',
             'city',
             'countryId',
-            'active',
             'countryStateId',
-            'productId',
-            'mediaId'
+            'active',
+            'mediaId',
+            'productId'
         ]),
-    },
 
-    hasStates() {
-        return this.states.length > 0;
-    },
+        countryId: {
+            get() {
+                return this.testdemo.countryId;
+            },
 
-    countryId: {
-        get() {
-            return this.address.countryId;
+            set(countryId) {
+                this.testdemo.countryId = countryId;
+            },
         },
 
-        set(countryId) {
-            this.address.countryId = countryId;
+        countryCriteria() {
+            const criteria = new Criteria(1, 25);
+            criteria.addSorting(Criteria.sort('position', 'ASC'));
+            return criteria;
         },
-    },
 
-    countryCriteria() {
-        const criteria = new Criteria(1, 25);
-        criteria.addSorting(Criteria.sort('position', 'ASC'));
-        return criteria;
-    },
+        stateCriteria() {
+            if (!this.countryId) {
+                return null;
+            }
 
-    stateCriteria() {
-        if (!this.countryId) {
-            return null;
-        }
+            const criteria = new Criteria(1, 25);
+            criteria.addFilter(Criteria.equals('countryId', this.countryId));
+            return criteria;
+        },
 
-        const criteria = new Criteria(1, 25);
-        criteria.addFilter(Criteria.equals('countryId', this.countryId));
-        return criteria;
+        hasStates() {
+            return this.states.length > 0;
+        },
     },
 
     watch: {
-        testdemoId() {
-            this.createdComponent();
-        },
         countryId: {
             immediate: true,
             handler(newId, oldId) {
                 if (typeof oldId !== 'undefined') {
-                    this.address.countryStateId = null;
+                    this.testdemo.countryStateId = null;
                 }
 
                 if (!this.countryId) {
@@ -180,6 +210,10 @@ Component.register('sw-testdemo-detail', {
                 });
             },
         },
+
+        testdemoId() {
+            this.createdComponent();
+        },
     },
 
     created() {
@@ -187,16 +221,6 @@ Component.register('sw-testdemo-detail', {
     },
 
     methods: {
-        getCountryStates() {
-            if (!this.country) {
-                return Promise.resolve();
-            }
-
-            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
-                this.states = response;
-            });
-        },
-
         createdComponent() {
             Shopware.ExtensionAPI.publishData({
                 id: 'sw-testdemo-detail__testdemo',
@@ -239,6 +263,16 @@ Component.register('sw-testdemo-detail', {
             this.isLoading = false;
         },
 
+        getCountryStates() {
+            if (!this.country) {
+                return Promise.resolve();
+            }
+
+            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
+                this.states = response;
+            });
+        },
+
         abortOnLanguageChange() {
             return this.testdemoRepository.hasChanges(this.testdemo);
         },
@@ -272,6 +306,9 @@ Component.register('sw-testdemo-detail', {
         },
 
         onSave() {
+            if (!this.acl.can('test_demo.editor')) {
+                return;
+            }
 
             this.isLoading = true;
 
@@ -284,7 +321,6 @@ Component.register('sw-testdemo-detail', {
                 }
 
                 this.loadEntityData();
-
             }).catch((exception) => {
                 this.isLoading = false;
                 this.createNotificationError({
