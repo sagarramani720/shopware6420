@@ -146,38 +146,14 @@
                                     </div>
                                 {% endblock %}
 
-                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                {% block sw_testdemo_detail_product_select_field %}
-                                    <sw-entity-multi-select
-                                        :disabled="disabled"
-                                        :help-text="helpText"
-                                        :entity-collection="productCollection"
-                                        :criteria="criteria"
-                                        @change="updateCollection"
+                                {% block sw_testdemo_detail_product_field %}
+                                    <sw-entity-single-select
                                         v-model="testdemo.productId"
-                                        :options="product"
                                         class="sw-testdemo_detail__product-select"
                                         entity="product"
                                         :label="$tc('sw-testdemo.detail.labelProduct')"
                                         :placeholder="$tc('sw-testdemo.detail.placeholderProduct')"
-                                        validation="required"
-                                        required
-                                        :error="testdemoProductIdError"
-                                        show-clearable-button
-                                    >
-
-                                    <template
-                                        v-if="productActiveState"
-                                        #result-label-preview="{ item }"
-                                    >
-                                        <sw-icon
-                                            class="sw-testdemo-product-select__active-icon"
-                                            size="6"
-                                            :color="getActiveIconColor(item)"
-                                            name="solid-circle"
-                                        />
-                                    </template>
-                                </sw-entity-multi-select>
+                                    />
                                 {% endblock %}
 
                                 {% block sw_testdemo_detail_base_info_logo_upload_field %}
@@ -185,9 +161,6 @@
                                     :upload-tag="mediaUploadTag"
                                     auto-upload
                                     @media-upload-finish="setMediaItem"
-                                    validation="required"
-                                    required
-                                    :error="testdemoMediaIdError"
                                 />
                                 <sw-media-upload-v2
                                     class="sw-testdemo-detail__logo-upload"
@@ -202,6 +175,9 @@
                                     @media-drop="onDropMedia"
                                     @media-upload-sidebar-open="openMediaSidebar"
                                     @media-upload-remove-image="onUnlinkLogo"
+                                    validation="required"
+                                    required
+                                    :error="testdemoImageIdError"
                                 />
                             {% endblock %}
 
@@ -212,6 +188,11 @@
                                     type="switch"
                                     bordered
                                     :label="$tc('sw-testdemo.detail.labelActive')"
+                                    validation="required"
+                                    required
+                                    :error="testdemoActiveError"
+                                    :disabled="disabled"
+                                    show-clearable-button
                                 />
                             {% endblock %}
 

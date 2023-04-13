@@ -9,7 +9,6 @@ const { Component, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
-// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-testdemo-detail', {
     template,
 
@@ -28,48 +27,26 @@ Component.register('sw-testdemo-detail', {
 
     props: {
         testdemoId: {
-            type: Array,
+            type: Object,
             required: false,
-            default: null,
+
         },
 
         disabled: {
             type: Boolean,
             required: false,
-            default: false,
-        },
-
-        criteria: {
-            type: Object,
-            required: false,
-            default: undefined,
-        },
-
-        helpText: {
-            type: String,
-            required: false,
             default: null,
-        },
-
-        productActiveState: {
-            type: Boolean,
-            required: false,
-            default: false,
         },
     },
 
     data() {
         return {
-            testdemo: null,
-            country: null,
+            testdemo: [],
+            country: [],
             states: [],
             customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
-            productId: {
-                id: 'container',
-                class: 'wrapper'
-            }
         };
     },
 
@@ -90,10 +67,6 @@ Component.register('sw-testdemo-detail', {
 
         countryStateRepository() {
             return this.repositoryFactory.create('country_state');
-        },
-
-        productRepository() {
-            return this.repositoryFactory.create('product');
         },
 
         testdemoIsLoading() {
@@ -153,11 +126,10 @@ Component.register('sw-testdemo-detail', {
         ...mapPropertyErrors('testdemo', [
             'name',
             'city',
+            'active',
             'countryId',
             'countryStateId',
-            'active',
-            'mediaId',
-            'productId'
+            'imageId',
         ]),
 
         countryId: {

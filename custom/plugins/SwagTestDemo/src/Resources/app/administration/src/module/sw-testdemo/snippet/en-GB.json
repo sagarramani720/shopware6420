@@ -31,6 +31,7 @@
             "labelState": "State",
             "labelImage": "Image",
             "labelProduct": "Product",
+            "label": "productLabel",
             "placeholderName": "Enter name...",
             "placeholderCity": "Enter city...",
             "placeholderCountry": "Select country...",
