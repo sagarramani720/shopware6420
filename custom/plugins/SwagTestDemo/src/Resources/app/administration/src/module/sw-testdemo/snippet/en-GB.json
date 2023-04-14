@@ -3,14 +3,13 @@
         "general": {
             "mainMenuItemList": "Test demo",
             "mainMenuItemGeneral": "Test demo",
-            "placeholderSearchBar": "Search testdemo..."
+            "placeholderSearchBar": "Zoek testdemo..."
         },
         "list": {
             "textTestdemoOverview": "Testdemo",
             "textTotalTestdemo": "No testdemo | One testdemo | {count} testdemo",
             "buttonAddTestdemo": "Add test demo",
             "columnName": "Name",
-            "columnLink": "Website",
             "columnCity": "City",
             "columnActive": "Active",
             "columnCountry": "Country",

@@ -55,14 +55,17 @@ class TestDemoDefinition extends EntityDefinition
                 new BoolField('active', 'active'),
                 (new FkField('country_id', 'countryId', CountryDefinition::class))->addFlags(new ApiAware(), new Required()),
                 (new FkField('country_state_id', 'countryStateId', CountryStateDefinition::class))->addFlags(new ApiAware()),
-                new FkField('media_id','mediaId',MediaDefinition::class),
-                new FkField('product_id','productId',ProductDefinition::class),
-                (new TranslationsAssociationField(TestDemoTranslationDefinition::class,'swag_first_test_demo_id'))->addFlags(new Required()),
+                (new FkField('media_id','mediaId',MediaDefinition::class))->addFlags(new ApiAware(), new Required()),
+                (new FkField('product_id','productId',ProductDefinition::class))->addFlags(new ApiAware(), new Required()),
+
                 (new ManyToOneAssociationField('country','country_id',CountryDefinition::class,'id'))->addFlags(new ApiAware()),
-                (new ManyToOneAssociationField('state','country_state_id',CountryStateDefinition::class,'id'))->addFlags(new ApiAware()),
+                (new ManyToOneAssociationField('countryState','country_state_id',CountryStateDefinition::class,'id'))->addFlags(new ApiAware()),
                 (new OneToOneAssociationField('media','media_id','id',MediaDefinition::class,false))->addFlags(new ApiAware(), new Required()),
                 (new ManyToOneAssociationField('product','product_id',ProductDefinition::class,'id'))->addFlags(new ApiAware(), new Required()),
-            )
+
+                (new TranslationsAssociationField(TestDemoTranslationDefinition::class,'test_demo_id'))->addFlags(new ApiAware(), new Required()),
+
+                )
         );
     }
 }

@@ -5,7 +5,9 @@
 import './page/sw-testdemo-list';
 import './page/sw-testdemo-detail';
 import './acl';
+import deGB from './snippet/de-DE';
 import enGB from './snippet/en-GB';
+
 import defaultSearchConfiguration from './default-search-configuration';
 
 const { Module } = Shopware;
@@ -21,6 +23,11 @@ Module.register('sw-testdemo', {
     icon: 'regular-products',
     favicon: 'icon-module-products.png',
     entity: 'test_demo',
+
+    // snippets: {
+    //     'de-DE': deDE,
+    //     'de-GB': enGB
+    // },
 
     routes: {
         index: {

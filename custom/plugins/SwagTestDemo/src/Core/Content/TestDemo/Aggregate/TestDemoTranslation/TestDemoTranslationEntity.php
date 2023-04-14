@@ -14,12 +14,12 @@ class TestDemoTranslationEntity extends Entity
     /**
      * @var string
      */
-    protected string $name;
+    protected $name;
 
     /**
      * @var string
      */
-    protected string $city;
+    protected $city;
 
     /**
      * @var \DateTimeInterface
@@ -34,24 +34,24 @@ class TestDemoTranslationEntity extends Entity
     /**
      * @var string
      */
-    protected string $testDemoId;
+    protected $testDemoId;
 
     /**
      * @var string
      */
-    protected string $languageId;
+    protected $languageId;
 
     /**
      * @var TestDemoEntity|null
      */
-    protected ?TestDemoEntity $testDemo;
+    protected $testDemo;
 
     /**
      * @var LanguageEntity|null
      */
-    protected ?LanguageEntity $language;
+    protected $language;
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -61,7 +61,7 @@ class TestDemoTranslationEntity extends Entity
         $this->name = $name;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -71,7 +71,7 @@ class TestDemoTranslationEntity extends Entity
         $this->city = $city;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }

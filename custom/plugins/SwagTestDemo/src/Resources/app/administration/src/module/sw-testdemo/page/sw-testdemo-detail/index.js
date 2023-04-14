@@ -27,13 +27,7 @@ Component.register('sw-testdemo-detail', {
 
     props: {
         testdemoId: {
-            type: Object,
-            required: false,
-
-        },
-
-        disabled: {
-            type: Boolean,
+            type: String | Object | Array,
             required: false,
             default: null,
         },
@@ -41,9 +35,11 @@ Component.register('sw-testdemo-detail', {
 
     data() {
         return {
-            testdemo: [],
-            country: [],
-            states: [],
+            testdemo: null,
+            country: null,
+            state: [],
+            media: [],
+            product: [],
             customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
@@ -61,14 +57,6 @@ Component.register('sw-testdemo-detail', {
             return this.placeholder(this.testdemo, 'name');
         },
 
-        countryRepository() {
-            return this.repositoryFactory.create('country');
-        },
-
-        countryStateRepository() {
-            return this.repositoryFactory.create('country_state');
-        },
-
         testdemoIsLoading() {
             return this.isLoading || this.testdemo == null;
         },
@@ -79,6 +67,18 @@ Component.register('sw-testdemo-detail', {
 
         mediaRepository() {
             return this.repositoryFactory.create('media');
+        },
+
+        countryRepository() {
+            return this.repositoryFactory.create('country');
+        },
+
+        countryStateRepository() {
+            return this.repositoryFactory.create('country_state');
+        },
+
+        productRepository(){
+            return this.repositoryFactory.create('product');
         },
 
         customFieldSetRepository() {
@@ -129,7 +129,8 @@ Component.register('sw-testdemo-detail', {
             'active',
             'countryId',
             'countryStateId',
-            'imageId',
+            'productId',
+            'mediaId',
         ]),
 
         countryId: {
@@ -216,7 +217,7 @@ Component.register('sw-testdemo-detail', {
                 this.customFieldSetRepository.search(this.customFieldSetCriteria),
             ]);
 
-            if (testdemoResponse.status === 'fulfilled') {
+            if (manufacturerResponse.status === 'fulfilled') {
                 this.testdemo = testdemoResponse.value;
             }
 
@@ -233,16 +234,6 @@ Component.register('sw-testdemo-detail', {
             }
 
             this.isLoading = false;
-        },
-
-        getCountryStates() {
-            if (!this.country) {
-                return Promise.resolve();
-            }
-
-            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
-                this.states = response;
-            });
         },
 
         abortOnLanguageChange() {
@@ -277,11 +268,20 @@ Component.register('sw-testdemo-detail', {
             this.setMediaItem({ targetId: dragData.id });
         },
 
+        getCountryStates() {
+            if (!this.country) {
+                return Promise.resolve();
+            }
+
+            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
+                this.states = response;
+            });
+        },
+
         onSave() {
             if (!this.acl.can('test_demo.editor')) {
                 return;
             }
-
             this.isLoading = true;
 
             this.testdemoRepository.save(this.testdemo).then(() => {

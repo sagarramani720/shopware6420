@@ -32,10 +32,5 @@
             <tag name="shopware.entity.extension"/>
         </service>
 
-        <service id="SwagTestDemo\Core\Api\TestDemoController" public="true">
-            <call method="setContainer">
-                <argument type="service" id="service_container"/>
-            </call>
-        </service>
     </services>
 </container>

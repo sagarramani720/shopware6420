@@ -22,67 +22,67 @@ class TestDemoEntity extends Entity
     /**
      * @var string
      */
-    protected string $name;
+    protected $name;
 
     /**
      * @var string
      */
-    protected string $city;
+    protected $city;
 
     /**
      * @var string|null
      */
-    protected ?string $notTranslatedField;
+    protected $notTranslatedField;
 
     /**
      * @var bool|null
      */
-    protected ?bool $active;
+    protected $active;
 
     /**
      * @var string
      */
-    protected string $countryId;
+    protected $countryId;
 
     /**
      * @var string|null
      */
-    protected ?string $countryStateId;
+    protected $countryStateId;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected ?string $mediaId;
+    protected $mediaId;
 
     /**
-     * @var string|null
+     * @var string
      */
-    protected ?string $productId;
+    protected $productId;
 
     /**
      * @var EntityCollection
      */
-    protected EntityCollection $translations;
+    protected $translations;
 
     /**
      * @var CountryEntity|null
      */
-    protected ?CountryEntity $country;
+    protected $country;
 
     /**
      * @var CountryStateEntity|null
      */
-    protected ?CountryStateEntity $state;
+    protected $countryState;
 
     /**
      * @var MediaEntity
      */
-    protected MediaEntity $media;
+    protected $media;
 
     /**
      * @var ProductEntity
      */
-    protected ProductEntity $product;
+    protected $product;
 
     /**
      * @var \DateTimeInterface
@@ -169,22 +169,22 @@ class TestDemoEntity extends Entity
         $this->countryStateId = $countryStateId;
     }
 
-    public function getMediaId(): ?string
+    public function getMediaId(): string
     {
         return $this->mediaId;
     }
 
-    public function setMediaId(?string $mediaId): void
+    public function setMediaId(string $mediaId): void
     {
         $this->mediaId = $mediaId;
     }
 
-    public function getProductId(): ?string
+    public function getProductId(): string
     {
         return $this->productId;
     }
 
-    public function setProductId(?string $productId): void
+    public function setProductId(string $productId): void
     {
         $this->productId = $productId;
     }
@@ -209,14 +209,14 @@ class TestDemoEntity extends Entity
         $this->country = $country;
     }
 
-    public function getState(): ?CountryStateEntity
+    public function getCountryState(): ?CountryStateEntity
     {
-        return $this->state;
+        return $this->countryState;
     }
 
-    public function setState(?CountryStateEntity $state): void
+    public function setCountryState(?CountryStateEntity $countryState): void
     {
-        $this->state = $state;
+        $this->countryState = $countryState;
     }
 
     public function getMedia(): MediaEntity
@@ -257,5 +257,15 @@ class TestDemoEntity extends Entity
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    public function getTranslated(): array
+    {
+        return $this->translated;
+    }
+
+    public function setTranslated(?array $translated): void
+    {
+        $this->translated = $translated;
     }
 }

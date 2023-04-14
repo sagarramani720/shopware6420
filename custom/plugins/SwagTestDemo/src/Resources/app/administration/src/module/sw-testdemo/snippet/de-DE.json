@@ -1,0 +1,52 @@
+{
+    "sw-manufacturer": {
+        "general": {
+            "mainMenuItemList": "Demo testen",
+            "mainMenuItemGeneral": "Demo testen",
+            "placeholderSearchBar": "Durchsuche alle Hersteller ..."
+        },
+        "list": {
+            "textTestdemoOverview": "Demo testen",
+            "textTotalTestdemo": "Geen testdemo Eén proefdemo {count} testdemo",
+            "buttonAddTestdemo": "Testdemo toevoegen",
+            "columnName": "Stad",
+            "columnCity": "City",
+            "columnActive": "Actief",
+            "columnCountry": "Land",
+            "columnState": "Staat",
+            "columnMedia": "Afbeelding",
+            "columnProduct": "Product"
+        },
+        "detail": {
+            "textHeadline": "Nieuwe testdemo",
+            "textMediaSelection": "Media selectie",
+            "buttonCancel": "Annuleren",
+            "buttonSave": "Redden",
+            "cardTitleTestdemoInfo": "Test demo-informatie",
+            "labelName": "Naam",
+            "labelCity": "Stad",
+            "labelActive": "Actief",
+            "labelCountry": "Land",
+            "labelState": "Staat",
+            "labelImage": "Afbeelding",
+            "labelProduct": "Product",
+            "label": "etiket",
+            "placeholderName": "Voer naam in...",
+            "placeholderCity": "Stad invoeren...",
+            "placeholderCountry": "Selecteer land...",
+            "placeholderState": "Selecteer staat...",
+            "placeholderImage": "Afbeeldingsbestand uploaden...",
+            "placeholderProduct": "Selecteer product...",
+            "messageSaveSuccess": "Testdemo \"{name}\" is opgeslagen.",
+            "labelLogo": "Afbeelding",
+            "labelUseAsLogo": "Gebruik als logo"
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "product_manufacturer": {
+                "label": "Demo testen"
+            }
+        }
+    }
+}

@@ -90,12 +90,12 @@
                                         :placeholder="placeholder(testdemo, 'name', $tc('sw-testdemo.detail.placeholderName'))"
                                         name="name"
                                         validation="required"
-                                        required
                                         :error="testdemoNameError"
+                                        :disabled="!acl.can('test_demo.editor')"
                                     />
                                 {% endblock %}
 
-                                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                                 {% block sw_testdemo_detail_base_info_city_field %}
                                     <sw-field
                                         v-model="testdemo.city"
@@ -104,25 +104,23 @@
                                         :placeholder="placeholder(testdemo, 'city', $tc('sw-testdemo.detail.placeholderCity'))"
                                         name="city"
                                         validation="required"
-                                        required
                                         :error="testdemoCityError"
+                                        :disabled="!acl.can('test_demo.editor')"
                                     />
                                 {% endblock %}
 
                                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                                 {% block sw_testdemo_detail_country_field %}
                                     <sw-entity-single-select
-                                        v-model="testdemo.countryId"
+                                        v-model="countryId"
                                         class="sw-testdemo_detail__country-select"
                                         entity="country"
                                         :criteria="countryCriteria"
                                         :label="$tc('sw-testdemo.detail.labelCountry')"
                                         :placeholder="$tc('sw-testdemo.detail.placeholderCountry')"
                                         validation="required"
-                                        required
                                         :error="testdemoCountryIdError"
-                                        :disabled="disabled"
-                                        show-clearable-button
+                                        :disabled="!acl.can('test_demo.editor')"
                                     />
                                 {% endblock %}
 
@@ -139,9 +137,9 @@
                                             :label="$tc('sw-testdemo.detail.labelState')"
                                             :placeholder="$tc('sw-testdemo.detail.placeholderState')"
                                             :required="country && country.forceStateInRegistration"
+                                            validation="required"
                                             :error="testdemoCountryStateIdError"
-                                            :disabled="disabled"
-                                            show-clearable-button
+                                            :disabled="!acl.can('test_demo.editor')"
                                         />
                                     </div>
                                 {% endblock %}
@@ -153,6 +151,9 @@
                                         entity="product"
                                         :label="$tc('sw-testdemo.detail.labelProduct')"
                                         :placeholder="$tc('sw-testdemo.detail.placeholderProduct')"
+                                        validation="required"
+                                        :error="testdemoProductIdError"
+                                        :disabled="!acl.can('test_demo.editor')"
                                     />
                                 {% endblock %}
 
@@ -164,7 +165,7 @@
                                 />
                                 <sw-media-upload-v2
                                     class="sw-testdemo-detail__logo-upload"
-                                    v-model="testdemo.imageId"
+                                    v-model="testdemo.mediaId"
                                     :source="testdemo.mediaId"
                                     :allow-multi-select="false"
                                     variant="regular"
@@ -176,8 +177,8 @@
                                     @media-upload-sidebar-open="openMediaSidebar"
                                     @media-upload-remove-image="onUnlinkLogo"
                                     validation="required"
-                                    required
-                                    :error="testdemoImageIdError"
+                                    :error="testdemoMediaIdError"
+                                    :disabled="!acl.can('test_demo.editor')"
                                 />
                             {% endblock %}
 
@@ -188,11 +189,6 @@
                                     type="switch"
                                     bordered
                                     :label="$tc('sw-testdemo.detail.labelActive')"
-                                    validation="required"
-                                    required
-                                    :error="testdemoActiveError"
-                                    :disabled="disabled"
-                                    show-clearable-button
                                 />
                             {% endblock %}
 
