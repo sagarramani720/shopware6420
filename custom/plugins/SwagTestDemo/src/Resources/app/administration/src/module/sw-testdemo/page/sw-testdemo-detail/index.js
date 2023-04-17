@@ -19,7 +19,7 @@ Component.register('sw-testdemo-detail', {
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('notification'),
-        Mixin.getByName('discard-detail-page-changes')('manufacturer'),
+        Mixin.getByName('discard-detail-page-changes')('testdemo'),
     ],
 
     shortcuts: {
