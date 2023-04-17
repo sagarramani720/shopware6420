@@ -17,7 +17,7 @@ class TestDemoTranslationEntity extends Entity
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $city;
 
@@ -66,7 +66,7 @@ class TestDemoTranslationEntity extends Entity
         return $this->city;
     }
 
-    public function setCity(string $city): void
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }

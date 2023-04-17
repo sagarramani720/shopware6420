@@ -88,11 +88,77 @@
                             @column-sort="onSortColumn"
                         >
                             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_testdemo_list_grid_columns_name_preview %}
-                                <template #preview-name="{ item }">
+                            {% block sw_testdemo_list_content_list_created_at %}
+                                <template #column-createdAt="{ item }">
+                                    {{ item.createdAt | date({hour: '2-digit', minute: '2-digit', second: '2-digit'}) }}
+                                </template>
+                            {% endblock %}
+
+                            {% block sw_testdemo_list_content_list_country %}
+                                <template #column-country="{ item }">
+                                    {{ item.countryId }}
+                                </template>
+                            {% endblock %}
+
+                            {% block sw_testdemo_list_content_list_country_state %}
+                                <template #column-state="{ item }">
+                                    {{ item.countryStateId }}
+                                </template>
+                            {% endblock %}
+
+                            {% block sw_testdemo_list_content_list_media %}
+                                <template #column-image="{ item }">
                                     <sw-media-preview-v2 :source="item.mediaId" />
                                 </template>
                             {% endblock %}
+
+                            {% block sw_testdemo_list_content_list_product %}
+                                <template #column-product="{ item }">
+                                    {{ item.productId }}
+                                </template>
+                            {% endblock %}
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_testdemo_list_grid_columns_name_preview %}
+                                <template #preview-name="{ item, compact }">
+                                    <sw-avatar
+                                        :size="compact ? '32px' : '48px'"
+                                        :source-context="item"
+                                        :name="item.name"
+                                    />
+                                </template>
+                            {% endblock %}
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_testdemo_list_grid_columns_active %}
+                                <template #column-active="{ item, isInlineEdit }">
+                                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                    {% block sw_testdemo_list_grid_columns_active_inline_edit %}
+                                        <template v-if="isInlineEdit">
+                                            <sw-checkbox-field v-model="item.active" />
+                                        </template>
+                                    {% endblock %}
+
+                                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                                    {% block sw_testdemo_list_grid_columns_active_content %}
+                                        <template v-else>
+                                            <sw-icon
+                                                v-if="item.active"
+                                                name="regular-checkmark-xs"
+                                                small
+                                                class="is--active"
+                                            />
+                                            <sw-icon
+                                                v-else
+                                                name="regular-times-s"
+                                                small
+                                                class="is--inactive"
+                                            />
+                                        </template>
+                                    {% endblock %}
+                                </template>
+                            {% endblock %}
+
                         </sw-entity-listing>
                     {% endblock %}
 

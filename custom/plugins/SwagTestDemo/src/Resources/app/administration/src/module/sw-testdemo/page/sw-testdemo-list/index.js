@@ -3,6 +3,7 @@
  */
 
 import template from './sw-testdemo-list.html.twig';
+import './sw-testdemo-list.scss';
 
 const { Component, Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
@@ -64,7 +65,7 @@ Component.register('sw-testdemo-list', {
                 inlineEdit:'bool',
                 primary:true,
             },{
-                property: 'country',
+                property: 'country.name',
                 dataIndex:'country',
                 allowResize: true,
                 routerLink:'sw.testdemo.detail',
@@ -72,7 +73,7 @@ Component.register('sw-testdemo-list', {
                 inlineEdit:'bool',
                 primary:true,
             },{
-                property: 'state',
+                property: 'countryState.name',
                 dataIndex:'state',
                 allowResize: true,
                 routerLink:'sw.testdemo.detail',
@@ -88,11 +89,19 @@ Component.register('sw-testdemo-list', {
                 inlineEdit:'string',
                 primary:true,
             },{
-                property: 'product',
+                property: 'product.name',
                 dataIndex:'product',
                 allowResize: true,
                 routerLink:'sw.testdemo.detail',
                 label:'sw-testdemo.list.columnProduct',
+                inlineEdit:'string',
+                primary:true,
+            },{
+                property: 'createdAt',
+                dataIndex:'createdAt',
+                allowResize: true,
+                routerLink:'sw.testdemo.detail',
+                label:'sw-testdemo.list.columnCreatedAt',
                 inlineEdit:'string',
                 primary:true,
             }];
@@ -103,7 +112,9 @@ Component.register('sw-testdemo-list', {
 
             testdemoCriteria.setTerm(this.term);
             testdemoCriteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection, this.naturalSorting));
-
+            testdemoCriteria.addAssociation('country');
+            testdemoCriteria.addAssociation('countryState');
+            testdemoCriteria.addAssociation('product');
             return testdemoCriteria;
         },
     },

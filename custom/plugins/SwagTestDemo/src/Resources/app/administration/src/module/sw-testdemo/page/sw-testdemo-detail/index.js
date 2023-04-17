@@ -9,6 +9,8 @@ const { Component, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
+// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
+
 Component.register('sw-testdemo-detail', {
     template,
 
@@ -17,7 +19,7 @@ Component.register('sw-testdemo-detail', {
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('notification'),
-        Mixin.getByName('discard-detail-page-changes')('testdemo'),
+        Mixin.getByName('discard-detail-page-changes')('manufacturer'),
     ],
 
     shortcuts: {
@@ -27,7 +29,7 @@ Component.register('sw-testdemo-detail', {
 
     props: {
         testdemoId: {
-            type: String | Object | Array,
+            type: String,
             required: false,
             default: null,
         },
@@ -35,12 +37,12 @@ Component.register('sw-testdemo-detail', {
 
     data() {
         return {
-            testdemo: null,
+            testdemo: [],
+            customFieldSets: [],
             country: null,
-            state: [],
+            states: [],
             media: [],
             product: [],
-            customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
         };
@@ -65,7 +67,7 @@ Component.register('sw-testdemo-detail', {
             return this.repositoryFactory.create('test_demo');
         },
 
-        mediaRepository() {
+        mediaRepository(){
             return this.repositoryFactory.create('media');
         },
 
@@ -78,7 +80,7 @@ Component.register('sw-testdemo-detail', {
         },
 
         productRepository(){
-            return this.repositoryFactory.create('product');
+            return $this.repositoryFactory.create('product');
         },
 
         customFieldSetRepository() {
@@ -125,12 +127,7 @@ Component.register('sw-testdemo-detail', {
 
         ...mapPropertyErrors('testdemo', [
             'name',
-            'city',
-            'active',
-            'countryId',
-            'countryStateId',
-            'productId',
-            'mediaId',
+            'city'
         ]),
 
         countryId: {
@@ -165,11 +162,15 @@ Component.register('sw-testdemo-detail', {
     },
 
     watch: {
+        testdemoId() {
+            this.createdComponent();
+        },
+
         countryId: {
             immediate: true,
             handler(newId, oldId) {
                 if (typeof oldId !== 'undefined') {
-                    this.testdemo.countryStateId = null;
+                    this.address.countryStateId = null;
                 }
 
                 if (!this.countryId) {
@@ -182,10 +183,6 @@ Component.register('sw-testdemo-detail', {
                     this.getCountryStates();
                 });
             },
-        },
-
-        testdemoId() {
-            this.createdComponent();
         },
     },
 
@@ -217,7 +214,7 @@ Component.register('sw-testdemo-detail', {
                 this.customFieldSetRepository.search(this.customFieldSetCriteria),
             ]);
 
-            if (manufacturerResponse.status === 'fulfilled') {
+            if (testdemoResponse.status === 'fulfilled') {
                 this.testdemo = testdemoResponse.value;
             }
 
@@ -282,6 +279,7 @@ Component.register('sw-testdemo-detail', {
             if (!this.acl.can('test_demo.editor')) {
                 return;
             }
+
             this.isLoading = true;
 
             this.testdemoRepository.save(this.testdemo).then(() => {
@@ -309,3 +307,6 @@ Component.register('sw-testdemo-detail', {
         },
     },
 });
+
+
+

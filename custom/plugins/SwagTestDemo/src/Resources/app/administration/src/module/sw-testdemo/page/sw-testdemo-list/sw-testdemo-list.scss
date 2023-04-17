@@ -1,0 +1,13 @@
+@import "~scss/variables";
+$sw-testdemo-list-color-error: $color-crimson-500;
+$sw-testdemo-list-color-success: $color-emerald-500;
+
+.sw-testdemo-list{
+    .is--inactive {
+        color: $sw-testdemo-list-color-error;
+    }
+
+    .is--active {
+        color: $sw-testdemo-list-color-success;
+    }
+}
