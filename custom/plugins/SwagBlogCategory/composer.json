@@ -1,0 +1,24 @@
+{
+  "name": "swag/blog-category",
+    "authors": [
+        {
+            "name": "sagar",
+            "role": "developer"
+        }
+    ],
+  "description": "Blog category plugin",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "SwagBlogCategory\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "SwagBlogCategory\\SwagBlogCategory",
+    "label": {
+      "de-DE": "Blog category plugin",
+      "en-GB": "Blog category plugin"
+    }
+  }
+}

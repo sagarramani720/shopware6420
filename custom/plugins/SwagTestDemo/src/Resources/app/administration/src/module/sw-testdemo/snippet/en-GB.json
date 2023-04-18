@@ -15,7 +15,8 @@
             "columnCountry": "Country",
             "columnState": "State",
             "columnMedia": "Image",
-            "columnProduct": "Product"
+            "columnProduct": "Product",
+            "columnCreatedAt": "Created at"
         },
         "detail": {
             "textHeadline": "New testdemo",

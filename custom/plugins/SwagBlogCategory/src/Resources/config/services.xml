@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="SwagBlogCategory\Core\Content\BlogCategory\BlogCategoryDefinition">
+            <tag name="shopware.entity.definition" entity="blog_category"/>
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\BlogCategory\Aggregate\BlogCategoryTranslation\BlogCategoryTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="blog_category_translation" />
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\BlogChild\BlogChildDefinition">
+            <tag name="shopware.entity.definition" entity="blog_child" />
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\BlogChildTranslation\BlogChildTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="blog_child_translation" />
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\BlogCategoryGroup\BlogCategoryGroupDefinition">
+            <tag name="shopware.entity.definition" entity="blog_category_group" />
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\ProductCategoryGroup\ProductCategoryGroupDefinition">
+            <tag name="shopware.entity.definition" entity="product_category_group" />
+        </service>
+
+        <service id="SwagBlogCategory\Core\Content\Extension\LanguageExtension">
+            <tag name="shopware.entity.extension"/>
+        </service>
+
+    </services>
+</container>

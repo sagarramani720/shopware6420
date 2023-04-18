@@ -4,11 +4,11 @@ namespace SwagTestDemo\Core\Content\TestDemo;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 use Shopware\Core\System\Country\CountryEntity;
 use Shopware\Core\System\Country\Aggregate\CountryState\CountryStateEntity;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Content\Product\ProductEntity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 class TestDemoEntity extends Entity
 {
@@ -25,7 +25,7 @@ class TestDemoEntity extends Entity
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $city;
 
@@ -40,7 +40,7 @@ class TestDemoEntity extends Entity
     protected $active;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $countryId;
 
@@ -50,19 +50,14 @@ class TestDemoEntity extends Entity
     protected $countryStateId;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $mediaId;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $productId;
-
-    /**
-     * @var EntityCollection
-     */
-    protected $translations;
 
     /**
      * @var CountryEntity|null
@@ -75,14 +70,19 @@ class TestDemoEntity extends Entity
     protected $countryState;
 
     /**
-     * @var MediaEntity
+     * @var MediaEntity|null
      */
     protected $media;
 
     /**
-     * @var ProductEntity
+     * @var ProductEntity|null
      */
     protected $product;
+
+    /**
+     * @var EntityCollection|null
+     */
+    protected $translations;
 
     /**
      * @var \DateTimeInterface
@@ -119,12 +119,12 @@ class TestDemoEntity extends Entity
         $this->name = $name;
     }
 
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function setCity(string $city): void
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }
@@ -149,12 +149,12 @@ class TestDemoEntity extends Entity
         $this->active = $active;
     }
 
-    public function getCountryId(): string
+    public function getCountryId(): ?string
     {
         return $this->countryId;
     }
 
-    public function setCountryId(string $countryId): void
+    public function setCountryId(?string $countryId): void
     {
         $this->countryId = $countryId;
     }
@@ -169,34 +169,24 @@ class TestDemoEntity extends Entity
         $this->countryStateId = $countryStateId;
     }
 
-    public function getMediaId(): string
+    public function getMediaId(): ?string
     {
         return $this->mediaId;
     }
 
-    public function setMediaId(string $mediaId): void
+    public function setMediaId(?string $mediaId): void
     {
         $this->mediaId = $mediaId;
     }
 
-    public function getProductId(): string
+    public function getProductId(): ?string
     {
         return $this->productId;
     }
 
-    public function setProductId(string $productId): void
+    public function setProductId(?string $productId): void
     {
         $this->productId = $productId;
-    }
-
-    public function getTranslations(): EntityCollection
-    {
-        return $this->translations;
-    }
-
-    public function setTranslations(EntityCollection $translations): void
-    {
-        $this->translations = $translations;
     }
 
     public function getCountry(): ?CountryEntity
@@ -219,24 +209,34 @@ class TestDemoEntity extends Entity
         $this->countryState = $countryState;
     }
 
-    public function getMedia(): MediaEntity
+    public function getMedia(): ?MediaEntity
     {
         return $this->media;
     }
 
-    public function setMedia(MediaEntity $media): void
+    public function setMedia(?MediaEntity $media): void
     {
         $this->media = $media;
     }
 
-    public function getProduct(): ProductEntity
+    public function getProduct(): ?ProductEntity
     {
         return $this->product;
     }
 
-    public function setProduct(ProductEntity $product): void
+    public function setProduct(?ProductEntity $product): void
     {
         $this->product = $product;
+    }
+
+    public function getTranslations(): ?EntityCollection
+    {
+        return $this->translations;
+    }
+
+    public function setTranslations(EntityCollection $translations): void
+    {
+        $this->translations = $translations;
     }
 
     public function getCreatedAt(): \DateTimeInterface

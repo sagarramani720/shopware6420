@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace SwagTestDemo\Core\Content\TestDemo\Aggregate\TestDemoTranslation;
+namespace SwagBlogCategory\Core\Content\BlogCategory\Aggregate\BlogCategoryTranslation;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use SwagTestDemo\Core\Content\TestDemo\TestDemoEntity;
+use Shopware\Core\Framework\Struct\ArrayEntity;
 use Shopware\Core\System\Language\LanguageEntity;
+use SwagBlogCategory\Core\Content\BlogCategory\BlogCategoryEntity;
 
-class TestDemoTranslationEntity extends Entity
+class BlogCategoryTranslationEntity extends Entity
 {
     use EntityIdTrait;
 
@@ -15,11 +16,6 @@ class TestDemoTranslationEntity extends Entity
      * @var string
      */
     protected $name;
-
-    /**
-     * @var string|null
-     */
-    protected $city;
 
     /**
      * @var \DateTimeInterface
@@ -34,7 +30,7 @@ class TestDemoTranslationEntity extends Entity
     /**
      * @var string
      */
-    protected $testDemoId;
+    protected $blogCategoryId;
 
     /**
      * @var string
@@ -42,9 +38,9 @@ class TestDemoTranslationEntity extends Entity
     protected $languageId;
 
     /**
-     * @var TestDemoEntity|null
+     * @var BlogCategoryEntity|null
      */
-    protected $testDemo;
+    protected $blogCategory;
 
     /**
      * @var LanguageEntity|null
@@ -59,16 +55,6 @@ class TestDemoTranslationEntity extends Entity
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(?string $city): void
-    {
-        $this->city = $city;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface
@@ -91,14 +77,14 @@ class TestDemoTranslationEntity extends Entity
         $this->updatedAt = $updatedAt;
     }
 
-    public function getTestDemoId(): string
+    public function getBlogCategoryId(): string
     {
-        return $this->testDemoId;
+        return $this->blogCategoryId;
     }
 
-    public function setTestDemoId(string $testDemoId): void
+    public function setBlogCategoryId(string $blogCategoryId): void
     {
-        $this->testDemoId = $testDemoId;
+        $this->blogCategoryId = $blogCategoryId;
     }
 
     public function getLanguageId(): string
@@ -111,14 +97,14 @@ class TestDemoTranslationEntity extends Entity
         $this->languageId = $languageId;
     }
 
-    public function getTestDemo(): ?TestDemoEntity
+    public function getBlogCategory(): ?BlogCategoryEntity
     {
-        return $this->testDemo;
+        return $this->blogCategory;
     }
 
-    public function setTestDemo(?TestDemoEntity $testDemo): void
+    public function setBlogCategory(?BlogCategoryEntity $blogCategory): void
     {
-        $this->testDemo = $testDemo;
+        $this->blogCategory = $blogCategory;
     }
 
     public function getLanguage(): ?LanguageEntity
