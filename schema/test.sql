@@ -21,7 +21,7 @@ CREATE TABLE `test_demo` (
 
 CREATE TABLE `test_demo_translation` (
     `name` VARCHAR(255) NOT NULL,
-    `city` VARCHAR(255) NOT NULL,
+    `city` VARCHAR(255) NULL,
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3) NULL,
     `test_demo_id` BINARY(16) NOT NULL,
