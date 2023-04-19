@@ -5,33 +5,53 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <!-- Start blog category definition service -->
         <service id="SwagBlogCategory\Core\Content\BlogCategory\BlogCategoryDefinition">
             <tag name="shopware.entity.definition" entity="blog_category"/>
         </service>
+        <!-- End Blog category definition service -->
 
+        <!-- Start blog category translation definition service -->
         <service id="SwagBlogCategory\Core\Content\BlogCategory\Aggregate\BlogCategoryTranslation\BlogCategoryTranslationDefinition">
             <tag name="shopware.entity.definition" entity="blog_category_translation" />
         </service>
+        <!-- End blog category translation definition service -->
 
+        <!-- Start blog child definition service -->
         <service id="SwagBlogCategory\Core\Content\BlogChild\BlogChildDefinition">
             <tag name="shopware.entity.definition" entity="blog_child" />
         </service>
+        <!-- End blog child definition service -->
 
+        <!-- Start blog child translation definition service -->
         <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\BlogChildTranslation\BlogChildTranslationDefinition">
             <tag name="shopware.entity.definition" entity="blog_child_translation" />
         </service>
+        <!-- End blog child translation definition service -->
 
-        <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\BlogCategoryGroup\BlogCategoryGroupDefinition">
-            <tag name="shopware.entity.definition" entity="blog_category_group" />
+        <!-- Start blog category mapping definition service -->
+        <service id="SwagBlogCategory\Core\Content\BlogCategoryMapping\BlogCategoryMappingDefinition">
+            <tag name="shopware.entity.definition" entity="blog_category_mapping" />
         </service>
+        <!-- End blog category mapping definition service -->
 
-        <service id="SwagBlogCategory\Core\Content\BlogChild\Aggregate\ProductCategoryGroup\ProductCategoryGroupDefinition">
-            <tag name="shopware.entity.definition" entity="product_category_group" />
+        <!-- Start product categoty mapping definition service -->
+        <service id="SwagBlogCategory\Core\Content\ProductCategoryMapping\ProductCategoryMappingDefinition">
+            <tag name="shopware.entity.definition" entity="product_category_mapping" />
         </service>
+        <!-- End product categoty mapping definition service -->
 
+        <!-- Start language extension service -->
         <service id="SwagBlogCategory\Core\Content\Extension\LanguageExtension">
             <tag name="shopware.entity.extension"/>
         </service>
+        <!-- End language extension service -->
+
+        <!-- Start product extension service -->
+        <service id="SwagTestDemo\Core\Content\Extension\ProductExtension">
+            <tag name="shopware.entity.extension"/>
+        </service>
+        <!-- End product extension service -->
 
     </services>
 </container>

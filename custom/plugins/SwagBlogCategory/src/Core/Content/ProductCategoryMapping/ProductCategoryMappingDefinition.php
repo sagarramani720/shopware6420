@@ -1,9 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace SwagBlogCategory\Core\Content\BlogChild\Aggregate\BlogCategoryGroup;
+namespace SwagBlogCategory\Core\Content\ProductCategoryMapping;
 
-use Shopware\Core\Checkout\Customer\Aggregate\CustomerGroup\CustomerGroupDefinition;
-use Shopware\Core\Content\Category\CategoryDefinition;
 use Shopware\Core\Content\Product\ProductDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CreatedAtField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -15,10 +13,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 use Shopware\Core\Framework\Log\Package;
 use SwagBlogCategory\Core\Content\BlogChild\BlogChildDefinition;
 
-#[Package('category-blog')]
-class BlogCategoryGroupDefinition extends MappingEntityDefinition
+#[Package('product-blog')]
+class ProductCategoryMappingDefinition extends MappingEntityDefinition
 {
-    public const ENTITY_NAME = 'blog_category_group';
+    public const ENTITY_NAME = 'product_category_mapping';
 
     public function getEntityName(): string
     {
@@ -33,10 +31,10 @@ class BlogCategoryGroupDefinition extends MappingEntityDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-            (new FkField('category_group_id', 'categories', BlogChildDefinition::class))->addFlags(new PrimaryKey(), new Required()),
-            (new FkField('product_id', 'products', ProductDefinition::class))->addFlags(new PrimaryKey(), new Required()),
-            new ManyToOneAssociationField('categories', 'category_group_id', BlogChildDefinition::class, 'id'),
-            new ManyToOneAssociationField('products', 'product_id', ProductDefinition::class, 'id'),
+            (new FkField('product_group_id', 'productGroupId', BlogChildDefinition::class))->addFlags(new PrimaryKey(), new Required()),
+            (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new PrimaryKey(), new Required()),
+            new ManyToOneAssociationField('productGroup', 'product_group_id', BlogChildDefinition::class, 'id',false),
+            new ManyToOneAssociationField('product', 'product_id', ProductDefinition::class, 'id',false),
             new CreatedAtField(),
         ]);
     }

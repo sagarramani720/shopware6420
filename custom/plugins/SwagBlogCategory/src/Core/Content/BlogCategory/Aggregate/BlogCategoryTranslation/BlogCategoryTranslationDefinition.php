@@ -19,10 +19,10 @@ class BlogCategoryTranslationDefinition extends EntityTranslationDefinition
     {
         return BlogCategoryDefinition::class;
     }
-    public function getEntityClass(): string
-    {
-        return BlogCategoryTranslationEntity::class;
-    }
+//    public function getEntityClass(): string
+//    {
+//        return BlogCategoryTranslationEntity::class;
+//    }
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
