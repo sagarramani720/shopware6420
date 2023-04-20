@@ -30,14 +30,14 @@
         <!-- End blog child translation definition service -->
 
         <!-- Start blog category mapping definition service -->
-        <service id="SwagBlogCategory\Core\Content\BlogCategoryMapping\BlogCategoryMappingDefinition">
-            <tag name="shopware.entity.definition" entity="blog_category_mapping" />
+        <service id="SwagBlogCategory\Core\Content\BlogCategoryMappingDefinition">
+            <tag name="shopware.entity.definition" entity="blog_mapping" />
         </service>
         <!-- End blog category mapping definition service -->
 
         <!-- Start product categoty mapping definition service -->
-        <service id="SwagBlogCategory\Core\Content\ProductCategoryMapping\ProductCategoryMappingDefinition">
-            <tag name="shopware.entity.definition" entity="product_category_mapping" />
+        <service id="SwagBlogCategory\Core\Content\ProductCategoryMappingDefinition">
+            <tag name="shopware.entity.definition" entity="product_mapping" />
         </service>
         <!-- End product categoty mapping definition service -->
 
@@ -48,10 +48,9 @@
         <!-- End language extension service -->
 
         <!-- Start product extension service -->
-        <service id="SwagTestDemo\Core\Content\Extension\ProductExtension">
+        <service id="SwagBlogCategory\Core\Content\Extension\ProductExtension">
             <tag name="shopware.entity.extension"/>
         </service>
         <!-- End product extension service -->
-
     </services>
 </container>

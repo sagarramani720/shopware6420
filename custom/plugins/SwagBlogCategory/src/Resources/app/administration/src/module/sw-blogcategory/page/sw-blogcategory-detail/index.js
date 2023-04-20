@@ -2,14 +2,14 @@
  * @package inventory
  */
 
-import template from './sw-testdemo-detail.html.twig';
-import './sw-testdemo-detail.scss';
+import template from './sw-blogcategory-detail.html.twig';
+import './sw-blogcategory-detail.scss';
 
 const { Component, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
-Component.register('sw-testdemo-detail', {
+Component.register('sw-blogcategory-detail', {
     template,
 
     inject: ['repositoryFactory', 'acl'],
@@ -17,7 +17,7 @@ Component.register('sw-testdemo-detail', {
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('notification'),
-        Mixin.getByName('discard-detail-page-changes')('testdemo'),
+        Mixin.getByName('discard-detail-page-changes')('blogcategory'),
     ],
 
     shortcuts: {
@@ -26,7 +26,7 @@ Component.register('sw-testdemo-detail', {
     },
 
     props: {
-        testdemoId: {
+        blogcategoryId: {
             type: String,
             required: false,
             default: null,
@@ -35,12 +35,8 @@ Component.register('sw-testdemo-detail', {
 
     data() {
         return {
-            testdemo: [],
+            blogcategory: null,
             customFieldSets: [],
-            country: null,
-            states: [],
-            media: [],
-            product: [],
             isLoading: false,
             isSaveSuccessful: false,
         };
@@ -54,31 +50,15 @@ Component.register('sw-testdemo-detail', {
 
     computed: {
         identifier() {
-            return this.placeholder(this.testdemo, 'name');
+            return this.placeholder(this.blogcategory, 'name');
         },
 
-        testdemoIsLoading() {
-            return this.isLoading || this.testdemo == null;
+        blogcategoryIsLoading() {
+            return this.isLoading || this.blogcategory == null;
         },
 
-        testdemoRepository() {
-            return this.repositoryFactory.create('test_demo');
-        },
-
-        mediaRepository(){
-            return this.repositoryFactory.create('media');
-        },
-
-        countryRepository() {
-            return this.repositoryFactory.create('country');
-        },
-
-        countryStateRepository() {
-            return this.repositoryFactory.create('country_state');
-        },
-
-        productRepository(){
-            return $this.repositoryFactory.create('product');
+        blogcategoryRepository() {
+            return this.repositoryFactory.create('blog_category');
         },
 
         customFieldSetRepository() {
@@ -88,18 +68,18 @@ Component.register('sw-testdemo-detail', {
         customFieldSetCriteria() {
             const criteria = new Criteria(1, null);
             criteria.addFilter(
-                Criteria.equals('relations.entityName', 'test_demo'),
+                Criteria.equals('relations.entityName', 'blog_category'),
             );
 
             return criteria;
         },
 
         mediaUploadTag() {
-            return `sw-testdemo-detail--${this.testdemo.id}`;
+            return `sw-blogcategory-detail--${this.blogcategory.id}`;
         },
 
         tooltipSave() {
-            if (this.acl.can('test_demo.editor')) {
+            if (this.acl.can('blog_category.editor')) {
                 const systemKey = this.$device.getSystemKey();
 
                 return {
@@ -123,64 +103,14 @@ Component.register('sw-testdemo-detail', {
             };
         },
 
-        ...mapPropertyErrors('testdemo', [
+        ...mapPropertyErrors('blogcategory', [
             'name',
-            'city'
         ]),
-
-        countryId: {
-            get() {
-                return this.testdemo.countryId;
-            },
-
-            set(countryId) {
-                this.testdemo.countryId = countryId;
-            },
-        },
-
-        countryCriteria() {
-            const criteria = new Criteria(1, 25);
-            criteria.addSorting(Criteria.sort('position', 'ASC'));
-            return criteria;
-        },
-
-        stateCriteria() {
-            if (!this.countryId) {
-                return null;
-            }
-
-            const criteria = new Criteria(1, 25);
-            criteria.addFilter(Criteria.equals('countryId', this.countryId));
-            return criteria;
-        },
-
-        hasStates() {
-            return this.states.length > 0;
-        },
     },
 
     watch: {
-        testdemoId() {
+        blogcategoryId() {
             this.createdComponent();
-        },
-
-        countryId: {
-            immediate: true,
-            handler(newId, oldId) {
-                if (typeof oldId !== 'undefined') {
-                    this.address.countryStateId = null;
-                }
-
-                if (!this.countryId) {
-                    this.country = null;
-                    return Promise.resolve();
-                }
-
-                return this.countryRepository.get(this.countryId).then((country) => {
-                    this.country = country;
-                    this.getCountryStates();
-                });
-            },
         },
     },
 
@@ -191,36 +121,36 @@ Component.register('sw-testdemo-detail', {
     methods: {
         createdComponent() {
             Shopware.ExtensionAPI.publishData({
-                id: 'sw-testdemo-detail__testdemo',
-                path: 'testdemo',
+                id: 'sw-blogcategory-detail__blogcategory',
+                path: 'blogcategory',
                 scope: this,
             });
-            if (this.testdemoId) {
+            if (this.blogcategoryId) {
                 this.loadEntityData();
                 return;
             }
 
             Shopware.State.commit('context/resetLanguageToDefault');
-            this.testdemo = this.testdemoRepository.create();
+            this.blogcategory = this.blogcategoryRepository.create();
         },
 
         async loadEntityData() {
             this.isLoading = true;
 
-            const [testdemoResponse, customFieldResponse] = await Promise.allSettled([
-                this.testdemoRepository.get(this.testdemoId),
+            const [blogcategoryResponse, customFieldResponse] = await Promise.allSettled([
+                this.blogcategoryRepository.get(this.blogcategoryId),
                 this.customFieldSetRepository.search(this.customFieldSetCriteria),
             ]);
 
-            if (testdemoResponse.status === 'fulfilled') {
-                this.testdemo = testdemoResponse.value;
+            if (blogcategoryResponse.status === 'fulfilled') {
+                this.blogcategory = blogcategoryResponse.value;
             }
 
             if (customFieldResponse.status === 'fulfilled') {
                 this.customFieldSets = customFieldResponse.value;
             }
 
-            if (testdemoResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
+            if (blogcategoryResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
                 this.createNotificationError({
                     message: this.$tc(
                         'global.notification.notificationLoadingDataErrorMessage',
@@ -232,7 +162,7 @@ Component.register('sw-testdemo-detail', {
         },
 
         abortOnLanguageChange() {
-            return this.testdemoRepository.hasChanges(this.testdemo);
+            return this.blogcategoryRepository.hasChanges(this.blogcategory);
         },
 
         saveOnLanguageChange() {
@@ -244,15 +174,15 @@ Component.register('sw-testdemo-detail', {
         },
 
         setMediaItem({ targetId }) {
-            this.testdemo.mediaId = targetId;
+            this.blogcategory.mediaId = targetId;
         },
 
         setMediaFromSidebar(media) {
-            this.testdemo.mediaId = media.id;
+            this.blogcategory.mediaId = media.id;
         },
 
         onUnlinkLogo() {
-            this.testdemo.mediaId = null;
+            this.blogcategory.mediaId = null;
         },
 
         openMediaSidebar() {
@@ -263,28 +193,18 @@ Component.register('sw-testdemo-detail', {
             this.setMediaItem({ targetId: dragData.id });
         },
 
-        getCountryStates() {
-            if (!this.country) {
-                return Promise.resolve();
-            }
-
-            return this.countryStateRepository.search(this.stateCriteria).then((response) => {
-                this.states = response;
-            });
-        },
-
         onSave() {
-            if (!this.acl.can('test_demo.editor')) {
+            if (!this.acl.can('blog_category.editor')) {
                 return;
             }
 
             this.isLoading = true;
 
-            this.testdemoRepository.save(this.testdemo).then(() => {
+            this.blogcategoryRepository.save(this.blogcategory).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
-                if (this.testdemoId === null) {
-                    this.$router.push({ name: 'sw.testdemo.detail', params: { id: this.testdemo.id } });
+                if (this.blogcategoryId === null) {
+                    this.$router.push({ name: 'sw.blogcategory.detail', params: { id: this.blogcategory.id } });
                     return;
                 }
 
@@ -301,10 +221,11 @@ Component.register('sw-testdemo-detail', {
         },
 
         onCancel() {
-            this.$router.push({ name: 'sw.testdemo.index' });
+            this.$router.push({ name: 'sw.blogcategory.index' });
         },
     },
 });
+
 
 
 

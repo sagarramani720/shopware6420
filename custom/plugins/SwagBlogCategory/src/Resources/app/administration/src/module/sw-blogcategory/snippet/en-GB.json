@@ -1,0 +1,34 @@
+{
+    "sw-blogcategory": {
+        "general": {
+            "mainMenuItemList": "Blog Category",
+            "mainMenuItemGeneral": "Blog Category",
+            "placeholderSearchBar": "Search Blog Category"
+        },
+        "list": {
+            "textBlogCategoryOverview": "Blog Category",
+            "textTotalBlogCategory": "No Blog Category | One Blog Category | {count} Blog Category",
+            "buttonAddBlogCategory": "Add Blog Category",
+            "columnName": "Name",
+            "columnCreatedAt": "Created at"
+        },
+        "detail": {
+            "textHeadline": "New Blog Category",
+            "cardTitleblogcategoryInfo": "Blog category information",
+            "textMediaSelection": "Media selection",
+            "buttonCancel": "Cancel",
+            "buttonSave": "Save",
+            "cardBlogCategoryTitleInfo": "Blog Category information",
+            "labelName": "Name",
+            "placeholderName": "Enter name...",
+            "messageSaveSuccess": "Blog Category \"{name}\" has been saved."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blog_category": {
+                "label": "Blog Category"
+            }
+        }
+    }
+}

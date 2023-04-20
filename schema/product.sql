@@ -590,3 +590,14 @@ CREATE TABLE `product_export` (
     CONSTRAINT `fk.product_export.sales_channel_domain_id` FOREIGN KEY (`sales_channel_domain_id`) REFERENCES `sales_channel_domain` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT `fk.product_export.currency_id` FOREIGN KEY (`currency_id`) REFERENCES `currency` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `product_mapping` (
+    `product_blog_id` BINARY(16) NOT NULL,
+    `product_id` BINARY(16) NOT NULL,
+    `product_version_id` BINARY(16) NULL,
+    PRIMARY KEY (`product_blog_id`,`product_id`),
+    KEY `fk.product_mapping.product_blog_id` (`product_blog_id`),
+    KEY `fk.product_mapping.product_id` (`product_id`,`product_version_id`),
+    CONSTRAINT `fk.product_mapping.product_blog_id` FOREIGN KEY (`product_blog_id`) REFERENCES `blog_child` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT `fk.product_mapping.product_id` FOREIGN KEY (`product_id`,`product_version_id`) REFERENCES `product` (`id`,`version_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

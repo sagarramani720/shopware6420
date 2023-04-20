@@ -20,10 +20,10 @@ class BlogChildTranslationDefinition extends EntityTranslationDefinition
     {
         return BlogChildDefinition::class;
     }
-//    public function getEntityClass(): string
-//    {
-//        return BlogChildTranslationEntity::class;
-//    }
+    public function getEntityClass(): string
+    {
+        return BlogChildTranslationEntity::class;
+    }
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
