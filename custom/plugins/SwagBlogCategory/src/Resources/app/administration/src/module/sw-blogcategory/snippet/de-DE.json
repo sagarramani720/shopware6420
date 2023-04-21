@@ -1,0 +1,34 @@
+{
+    "sw-blogcategory": {
+        "general": {
+            "mainMenuItemList": "Blogcategorie",
+            "mainMenuItemGeneral": "Blogcategorie",
+            "placeholderSearchBar": "Zoek blogcategorie"
+        },
+        "list": {
+            "textBlogCategoryOverview": "Blogcategorie",
+            "textTotalBlogCategory": "Geen blogcategorie | Eén blogcategorie | {count} Blogcategorie",
+            "buttonAddBlogCategory": "Blogcategorie toevoegen",
+            "columnName": "Naam",
+            "columnCreatedAt": "Gemaakt bij"
+        },
+        "detail": {
+            "textHeadline": "Nieuwe blogcategorie",
+            "cardTitleBlogCategoryInfo": "Informatie over blogcategorieën",
+            "textMediaSelection": "Media selectie",
+            "buttonCancel": "Annuleren",
+            "buttonSave": "Redden",
+            "cardBlogCategoryTitleInfo": "Blog Categorie-informatie",
+            "labelName": "Naam",
+            "placeholderName": "Voer naam in...",
+            "messageSaveSuccess": "Blogcategorie \"{name}\" is opgeslagen."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blog_category": {
+                "label": "Blogcategorie"
+            }
+        }
+    }
+}

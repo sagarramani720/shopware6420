@@ -1,0 +1,51 @@
+{
+    "sw-blog": {
+        "general": {
+            "mainMenuItemList": "Blogs",
+            "mainMenuItemGeneral": "Blogs",
+            "placeholderSearchBar": "Search Blogs"
+        },
+        "list": {
+            "textBlogOverview": "Blogs",
+            "textTotalBlogs": "No Blogs | One Blogs | {count} Blogs",
+            "buttonAddBlogs": "Add Blogs",
+            "columnName": "Name",
+            "columnDescription": "Description",
+            "columnAuthorName": "Author name",
+            "columnCategories": "Categories",
+            "columnProducts": "Products",
+            "columnDate": "Release date",
+            "columnActive": "Active",
+            "columnCreatedAt": "Created at"
+        },
+        "detail": {
+            "textHeadline": "New Blogs",
+            "cardTitleBlogInfo": "Blogs information",
+            "textMediaSelection": "Media selection",
+            "buttonCancel": "Cancel",
+            "buttonSave": "Save",
+            "cardBlogTitleInfo": "Blogs information",
+            "labelName": "Name",
+            "labelDate": "Release Date",
+            "labelAuthorName": "Author name",
+            "labelCategories": "Categories",
+            "labelProduct": "Products",
+            "labelDescription": "Description",
+            "labelActive": "Active",
+            "placeholderName": "Enter name...",
+            "placeholderDate": "Select release date...",
+            "placeholderAuthorName": "Enter author name...",
+            "placeholderCategories": "Select Categories...",
+            "placeholderProduct": "Select Products...",
+            "placeholderDescription": "Enter some description...",
+            "messageSaveSuccess": "Blogs \"{name}\" has been saved."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blog_child": {
+                "label": "Blogs"
+            }
+        }
+    }
+}

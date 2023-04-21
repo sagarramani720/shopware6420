@@ -5,6 +5,7 @@
 import './page/sw-blogcategory-list';
 import './page/sw-blogcategory-detail';
 import './acl';
+import deDE from './snippet/de-DE';
 import enGB from './snippet/en-GB';
 
 import defaultSearchConfiguration from './default-search-configuration';
@@ -24,7 +25,8 @@ Module.register('sw-blogcategory', {
     entity: 'blog_category',
 
     snippets: {
-        'de-GB': enGB
+        'de-DE': deDE,
+        'en-GB': enGB
     },
 
     routes: {
@@ -69,7 +71,7 @@ Module.register('sw-blogcategory', {
         id: 'sw-blogcategory',
         parent: 'sw-catalogue',
         color: '#57D9A3',
-        position: 50,
+        position: 52,
     }],
 
     defaultSearchConfiguration,

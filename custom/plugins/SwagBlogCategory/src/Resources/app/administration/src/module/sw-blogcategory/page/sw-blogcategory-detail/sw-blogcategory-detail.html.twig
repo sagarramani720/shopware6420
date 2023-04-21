@@ -6,13 +6,11 @@
             <template #smart-bar-header>
                 <h2>{{ placeholder(blogcategory, 'name', $tc('sw-blogcategory.detail.textHeadline')) }}</h2>
             </template>
-
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_blogcategory_detail_actions %}
             <template #smart-bar-actions>
-
                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                 {% block sw_blogcategory_detail_actions_abort %}
                     <sw-button
@@ -31,7 +29,7 @@
                         v-tooltip.bottom="tooltipSave"
                         class="sw-blogcategory-detail__save-action"
                         :is-loading="isLoading"
-                        :disabled="isLoading || !acl.can('test_demo.editor')"
+                        :disabled="isLoading || !acl.can('blog_category.editor')"
                         variant="primary"
                         @click.prevent="onSave"
                     >
@@ -75,7 +73,7 @@
                     {% block sw_blogcategory_detail_base_basic_info_card %}
                         <sw-card
                             position-identifier="sw-blogcategory-detail-basic-info"
-                            :title="$tc('sw-blogcategory.detail.cardTitleblogcategoryInfo')"
+                            :title="$tc('sw-blogcategory.detail.cardTitleBlogCategoryInfo')"
                         >
                             <sw-container
                                 class="sw-blogcategory-detail__container"
@@ -95,10 +93,9 @@
                                             validation="required"
                                             required
                                             :error="blogcategoryNameError"
-                                            :disabled="!acl.can('test_demo.editor')"
+                                            :disabled="!acl.can('blog_category.editor')"
                                         />
                                     {% endblock %}
-
                                 </div>
                             </sw-container>
                         </sw-card>
@@ -116,7 +113,7 @@
                                 v-if="blogcategory"
                                 :entity="blogcategory"
                                 :sets="customFieldSets"
-                                :disabled="!acl.can('test_demo.editor')"
+                                :disabled="!acl.can('blog_category.editor')"
                             />
                         </sw-card>
                     {% endblock %}
@@ -125,12 +122,12 @@
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_blogcategory_detail_sidebar %}
+        {% block sw_manufacturer_detail_sidebar %}
             <template slot="sidebar">
                 <sw-sidebar :propagate-width="true">
                     <sw-sidebar-media-item
                         ref="mediaSidebarItem"
-                        :disabled="!acl.can('test_demo.editor')"
+                        :disabled="!acl.can('blog_category.editor')"
                     >
                         <template
                             slot="context-menu-items"
@@ -144,5 +141,6 @@
                 </sw-sidebar>
             </template>
         {% endblock %}
+
     </sw-page>
 {% endblock %}

@@ -2,15 +2,15 @@
  * @package inventory
  */
 
-import template from './sw-blogcategory-detail.html.twig';
-import './sw-blogcategory-detail.scss';
+import template from './sw-blog-detail.html.twig';
+import './sw-blog-detail.scss';
 
-const { Component, Mixin, Data: { Criteria } } = Shopware;
-
+const { Component,Context, Mixin, Data: { Criteria } } = Shopware;
+const { EntityCollection } = Shopware.Data;
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
 // eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
-Component.register('sw-blogcategory-detail', {
+Component.register('sw-blog-detail', {
     template,
 
     inject: ['repositoryFactory', 'acl'],
@@ -18,7 +18,7 @@ Component.register('sw-blogcategory-detail', {
     mixins: [
         Mixin.getByName('placeholder'),
         Mixin.getByName('notification'),
-        Mixin.getByName('discard-detail-page-changes')('blogcategory'),
+        Mixin.getByName('discard-detail-page-changes')('blog'),
     ],
 
     shortcuts: {
@@ -27,17 +27,20 @@ Component.register('sw-blogcategory-detail', {
     },
 
     props: {
-        blogcategoryId: {
+        blogId: {
             type: String,
             required: false,
             default: null,
         },
     },
 
-
     data() {
         return {
-            blogcategory: null,
+            blog: null,
+            category: [],
+            product: [],
+            billingCategories: null,
+            billingProducts: null,
             customFieldSets: [],
             isLoading: false,
             isSaveSuccessful: false,
@@ -52,19 +55,23 @@ Component.register('sw-blogcategory-detail', {
 
     computed: {
         identifier() {
-            return this.placeholder(this.blogcategory, 'name');
+            return this.placeholder(this.blog, 'name');
         },
 
-        blogcategoryIsLoading() {
-            return this.isLoading || this.blogcategory == null;
+        productRepository(){
+            return this.repositoryFactory.create('product');
         },
 
-        blogcategoryRepository() {
+        categoryRepository(){
             return this.repositoryFactory.create('blog_category');
         },
 
-        mediaRepository() {
-            return this.repositoryFactory.create('media');
+        blogIsLoading() {
+            return this.isLoading || this.blog == null;
+        },
+
+        blogRepository() {
+            return this.repositoryFactory.create('blog_child');
         },
 
         customFieldSetRepository() {
@@ -74,18 +81,14 @@ Component.register('sw-blogcategory-detail', {
         customFieldSetCriteria() {
             const criteria = new Criteria(1, null);
             criteria.addFilter(
-                Criteria.equals('relations.entityName', 'blog_category'),
+                Criteria.equals('relations.entityName', 'blog_child'),
             );
 
             return criteria;
         },
 
-        mediaUploadTag() {
-            return `sw-blogcategory-detail--${this.blogcategory.id}`;
-        },
-
         tooltipSave() {
-            if (this.acl.can('blog_category.editor')) {
+            if (this.acl.can('blog_child.editor')) {
                 const systemKey = this.$device.getSystemKey();
 
                 return {
@@ -109,11 +112,19 @@ Component.register('sw-blogcategory-detail', {
             };
         },
 
-        ...mapPropertyErrors('blogcategory', ['name']),
+        ...mapPropertyErrors(
+            'blog', [
+                'name',
+                'authorName',
+                'releaseDate',
+                'category',
+                'product',
+                'description'
+            ]),
     },
 
     watch: {
-        blogcategoryId() {
+        blogId() {
             this.createdComponent();
         },
     },
@@ -124,37 +135,62 @@ Component.register('sw-blogcategory-detail', {
 
     methods: {
         createdComponent() {
+            this.billingCategories = new EntityCollection(
+                this.categoryRepository.route,
+                this.categoryRepository.entityName,
+                Context.api,
+            );
+
+            this.billingProducts = new EntityCollection(
+                this.productRepository.route,
+                this.productRepository.entityName,
+                Context.api,
+            );
+
             Shopware.ExtensionAPI.publishData({
-                id: 'sw-blogcategory-detail__blogcategory',
-                path: 'blogcategory',
+                id: 'sw-blog-detail__blog',
+                path: 'blog',
                 scope: this,
             });
-            if (this.blogcategoryId) {
+            if (this.blogId) {
                 this.loadEntityData();
                 return;
             }
 
             Shopware.State.commit('context/resetLanguageToDefault');
-            this.blogcategory = this.blogcategoryRepository.create();
+            this.blog = this.blogRepository.create();
+        },
+
+        setCategoryIds(categories) {
+            this.categoryIds = categories.getIds();
+            this.billingCategories = categories;
+            this.blog.categoryIds=categories.getIds();
+            this.blog.blogCategories=categories;
+        },
+
+        setProductIds(products) {
+            this.productIds = products.getIds();
+            this.billingProducts = products;
+            this.blog.productIds=products.getIds();
+            this.blog.productCategories=products;
         },
 
         async loadEntityData() {
             this.isLoading = true;
-
-            const [blogcategoryResponse, customFieldResponse] = await Promise.allSettled([
-                this.blogcategoryRepository.get(this.blogcategoryId),
+            const [blogResponse, customFieldResponse] = await Promise.allSettled([
+                this.blogRepository.get(this.blogId),
                 this.customFieldSetRepository.search(this.customFieldSetCriteria),
             ]);
 
-            if (blogcategoryResponse.status === 'fulfilled') {
-                this.blogcategory = blogcategoryResponse.value;
+            if (blogResponse.status === 'fulfilled') {
+                this.blog = blogResponse.value;
             }
 
             if (customFieldResponse.status === 'fulfilled') {
                 this.customFieldSets = customFieldResponse.value;
             }
 
-            if (blogcategoryResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
+            if (blogResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
                 this.createNotificationError({
                     message: this.$tc(
                         'global.notification.notificationLoadingDataErrorMessage',
@@ -166,7 +202,7 @@ Component.register('sw-blogcategory-detail', {
         },
 
         abortOnLanguageChange() {
-            return this.blogcategoryRepository.hasChanges(this.blogcategory);
+            return this.blogcategoryRepository.hasChanges(this.blog);
         },
 
         saveOnLanguageChange() {
@@ -177,38 +213,18 @@ Component.register('sw-blogcategory-detail', {
             this.loadEntityData();
         },
 
-        setMediaItem({ targetId }) {
-            this.blogcategory.mediaId = targetId;
-        },
-
-        setMediaFromSidebar(media) {
-            this.blogcategory.mediaId = media.id;
-        },
-
-        onUnlinkLogo() {
-            this.blogcategory.mediaId = null;
-        },
-
-        openMediaSidebar() {
-            this.$refs.mediaSidebarItem.openContent();
-        },
-
-        onDropMedia(dragData) {
-            this.setMediaItem({ targetId: dragData.id });
-        },
-
         onSave() {
-            if (!this.acl.can('blog_category.editor')) {
+
+            if (!this.acl.can('blog_child.editor')) {
                 return;
             }
-
+            console.log(this.blog);
             this.isLoading = true;
-
-            this.blogcategoryRepository.save(this.blogcategory).then(() => {
+            this.blogRepository.save(this.blog).then(() => {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
-                if (this.blogcategoryId === null) {
-                    this.$router.push({ name: 'sw.blogcategory.detail', params: { id: this.blogcategory.id } });
+                if (this.blogId === null) {
+                    this.$router.push({ name: 'sw.blog.detail', params: { id: this.blog.id } });
                     return;
                 }
 
@@ -226,7 +242,7 @@ Component.register('sw-blogcategory-detail', {
         },
 
         onCancel() {
-            this.$router.push({ name: 'sw.blogcategory.index' });
+            this.$router.push({ name: 'sw.blog.index' });
         },
     },
 });

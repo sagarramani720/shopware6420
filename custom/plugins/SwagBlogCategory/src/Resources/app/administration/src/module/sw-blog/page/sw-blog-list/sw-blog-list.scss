@@ -1,0 +1,13 @@
+@import "~scss/variables";
+$sw-blog-list-color-error: $color-crimson-500;
+$sw-blog-list-color-success: $color-emerald-500;
+
+.sw-blog-list{
+    .is--inactive {
+        color: $sw-blog-list-color-error;
+    }
+
+    .is--active {
+        color: $sw-blog-list-color-success;
+    }
+}

@@ -1,0 +1,51 @@
+{
+    "sw-blog": {
+        "general": {
+            "mainMenuItemList": "Blogs",
+            "mainMenuItemGeneral": "Blogs",
+            "placeholderSearchBar": "Zoek blogs"
+        },
+        "list": {
+            "textBlogOverview": "Blogs",
+            "textTotalBlogs": "Geen blogs | Een blog | {tel} Blogs",
+            "buttonAddBlogs": "Blogs toevoegen",
+            "columnName": "Naam",
+            "columnDescription": "Beschrijving",
+            "columnAuthorName": "Auteur naam",
+            "columnCategories": "Categorieën",
+            "columnProducts": "Producten",
+            "columnDate": "Datum van publicatie",
+            "columnActive": "Actief",
+            "columnCreatedAt": "Gemaakt bij"
+        },
+        "detail": {
+            "textHeadline": "Nieuwe blogs",
+            "cardTitleBlogInfo": "Blog informatie",
+            "textMediaSelection": "Media selectie",
+            "buttonCancel": "Annuleren",
+            "buttonSave": "Redden",
+            "cardBlogTitleInfo": "Blog informatie",
+            "labelName": "Naam",
+            "labelDate": "Datum van publicatie",
+            "labelAuthorName": "Auteur naam",
+            "labelCategories": "Categorieën",
+            "labelProduct": "Producten",
+            "labelDescription": "Beschrijving",
+            "labelActive": "Actief",
+            "placeholderName": "Voer naam in...",
+            "placeholderDate": "Selecteer releasedatum...",
+            "placeholderAuthorName": "Voer auteursnaam in...",
+            "placeholderCategories": "Categorieën selecteren...",
+            "placeholderProduct": "Selecteer producten...",
+            "placeholderDescription": "Voer een beschrijving in...",
+            "messageSaveSuccess": "Blogs \"{name}\" is opgeslagen."
+        }
+    },
+    "sw-privileges": {
+        "permissions": {
+            "blog_child": {
+                "label": "Blogs"
+            }
+        }
+    }
+}

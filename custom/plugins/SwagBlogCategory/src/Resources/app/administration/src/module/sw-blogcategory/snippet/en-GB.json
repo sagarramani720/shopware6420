@@ -14,7 +14,7 @@
         },
         "detail": {
             "textHeadline": "New Blog Category",
-            "cardTitleblogcategoryInfo": "Blog category information",
+            "cardTitleBlogCategoryInfo": "Blog category information",
             "textMediaSelection": "Media selection",
             "buttonCancel": "Cancel",
             "buttonSave": "Save",

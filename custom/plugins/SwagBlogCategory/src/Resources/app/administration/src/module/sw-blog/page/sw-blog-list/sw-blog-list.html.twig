@@ -1,30 +1,30 @@
 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-{% block sw_testdemo_list %}
-    <sw-page class="sw-testdemo-list">
+{% block sw_blog_list %}
+    <sw-page class="sw-blog-list">
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_testdemo_list_search_bar %}
+        {% block sw_blog_list_search_bar %}
             <template #search-bar>
                 <sw-search-bar
-                    initial-search-type="test_demo"
+                    initial-search-type="blogs"
                     :initial-search="term"
                     @search="onSearch"
                 />
-              </template>
+            </template>
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_testdemo_list_smart_bar_header %}
+        {% block sw_blog_list_smart_bar_header %}
             <template #smart-bar-header>
                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                {% block sw_testdemo_list_smart_bar_header_title %}
+                {% block sw_blog_list_smart_bar_header_title %}
                     <h2>
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                        {% block sw_testdemo_list_smart_bar_header_title_text %}
-                            {{ $tc('sw-testdemo.list.textTestdemoOverview') }}
+                        {% block sw_blog_list_smart_bar_header_title_text %}
+                            {{ $tc('sw-blog.list.textBlogOverview') }}
                         {% endblock %}
 
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                        {% block sw_testdemo_list_smart_bar_header_amount %}
+                        {% block sw_blog_list_smart_bar_header_amount %}
                             <span
                                 v-if="!isLoading"
                                 class="sw-page__smart-bar-amount"
@@ -38,27 +38,29 @@
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_testdemo_list_actions %}
+        {% block sw_blog_list_actions %}
             <template #smart-bar-actions>
                 <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                {% block sw_testdemo_list_smart_bar_actions %}
+                {% block sw_blog_list_smart_bar_actions %}
                     <sw-button
                         v-tooltip.bottom="{
                 message: $tc('sw-privileges.tooltip.warning'),
+                disabled: acl.can('blog_child.creator'),
                 showOnDisabledElements: true
             }"
-                        :router-link="{ name: 'sw.testdemo.create' }"
-                        class="sw-testdemo-list__add-testdemo"
+                        :router-link="{ name: 'sw.blog.create' }"
+                        :disabled="!acl.can('blog_child.creator')"
+                        class="sw-blog-list__add-blog"
                         variant="primary"
                     >
-                        {{ $tc('sw-testdemo.list.buttonAddTestdemo') }}
+                        {{ $tc('sw-blog.list.buttonAddBlogs') }}
                     </sw-button>
                 {% endblock %}
             </template>
         {% endblock %}
 
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-        {% block sw_testdemo_list_language_switch %}
+        {% block sw_blog_list_language_switch %}
             <template #language-switch>
                 <sw-language-switch @on-change="onChangeLanguage" />
             </template>
@@ -66,81 +68,44 @@
 
         <template #content>
             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-            {% block sw_testdemo_list_content %}
-                <div class="sw-testdemo-list__content">
+            {% block sw_blog_list_content %}
+                <div class="sw-blog-list__content">
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_testdemo_list_grid %}
+                    {% block sw_blog_list_grid %}
                         <sw-entity-listing
                             v-if="entitySearchable"
-                            class="sw-testdemo-list__grid"
-                            detail-route="sw.testdemo.detail"
+                            class="sw-blog-list__grid"
+                            detail-route="sw.blog.detail"
                             :is-loading="isLoading"
-                            :columns="testdemoColumns"
-                            :repository="testdemoRepository"
-                            :items="testdemo"
+                            :columns="blogColumns"
+                            :repository="blogRepository"
+                            :items="blog"
                             :criteria-limit="limit"
                             :sort-by="currentSortBy"
                             :sort-direction="sortDirection"
                             :disable-data-fetching="true"
-                            identifier="sw-testdemo-list"
+                            :allow-edit="acl.can('blog_child.editor')"
+                            :allow-inline-edit="acl.can('blog_child.editor')"
+                            :allow-delete="acl.can('blog_child.deleter')"
+                            :show-selections="acl.can('blog_child.deleter')"
+                            identifier="sw-blog-list"
                             @update-records="updateTotal"
                             @page-change="onPageChange"
                             @column-sort="onSortColumn"
                         >
-                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_testdemo_list_content_list_created_at %}
-                                <template #column-createdAt="{ item }">
-                                    {{ item.createdAt | date({hour: '2-digit', minute: '2-digit', second: '2-digit'}) }}
-                                </template>
-                            {% endblock %}
-
-                            {% block sw_testdemo_list_content_list_country %}
-                                <template #column-country="{ item }">
-                                    {{ item.countryId }}
-                                </template>
-                            {% endblock %}
-
-                            {% block sw_testdemo_list_content_list_country_state %}
-                                <template #column-state="{ item }">
-                                    {{ item.countryStateId }}
-                                </template>
-                            {% endblock %}
-
-                            {% block sw_testdemo_list_content_list_media %}
-                                <template #column-image="{ item }">
-                                    <sw-media-preview-v2 :source="item.mediaId" />
-                                </template>
-                            {% endblock %}
-
-                            {% block sw_testdemo_list_content_list_product %}
-                                <template #column-product="{ item }">
-                                    {{ item.productId }}
-                                </template>
-                            {% endblock %}
 
                             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_testdemo_list_grid_columns_name_preview %}
-                                <template #preview-name="{ item, compact }">
-                                    <sw-avatar
-                                        :size="compact ? '32px' : '48px'"
-                                        :source-context="item"
-                                        :name="item.name"
-                                    />
-                                </template>
-                            {% endblock %}
-
-                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_testdemo_list_grid_columns_active %}
+                            {% block sw_blog_list_grid_columns_active %}
                                 <template #column-active="{ item, isInlineEdit }">
                                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                    {% block sw_testdemo_list_grid_columns_active_inline_edit %}
+                                    {% block sw_blog_list_grid_columns_active_inline_edit %}
                                         <template v-if="isInlineEdit">
                                             <sw-checkbox-field v-model="item.active" />
                                         </template>
                                     {% endblock %}
 
                                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                    {% block sw_testdemo_list_grid_columns_active_content %}
+                                    {% block sw_blog_list_grid_columns_active_content %}
                                         <template v-else>
                                             <sw-icon
                                                 v-if="item.active"
@@ -158,11 +123,26 @@
                                     {% endblock %}
                                 </template>
                             {% endblock %}
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_blog_list_content_list_created_at %}
+                                <template #column-createdAt="{ item }">
+                                    {{ item.createdAt | date({hour: '2-digit', minute: '2-digit', second: '2-digit'}) }}
+                                </template>
+                            {% endblock %}
+
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_blog_list_content_list_release_date %}
+                                <template #column-releaseDate="{ item }">
+                                    {{ item.releaseDate | date({hour: '2-digit', minute: '2-digit', second: '2-digit'}) }}
+                                </template>
+                            {% endblock %}
+
                         </sw-entity-listing>
                     {% endblock %}
 
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_testdemo_list_empty_state %}
+                    {% block sw_blog_list_empty_state %}
                         <sw-empty-state
                             v-if="!isLoading && !total && isValidTerm(term)"
                             :title="$tc('sw-empty-state.messageNoResultTitle')"
@@ -182,7 +162,7 @@
 
                     {# @deprecated tag:v6.5.0 - Will be removed #}
                     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                    {% block sw_testdemo_list_grid_loader %}{% endblock %}
+                    {% block sw_blog_list_grid_loader %}{% endblock %}
                 </div>
             {% endblock %}
         </template>

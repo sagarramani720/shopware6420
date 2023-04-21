@@ -7,10 +7,11 @@ import template from './sw-blogcategory-list.html.twig';
 const { Component, Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
 
+// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-blogcategory-list', {
     template,
 
-    inject: ['repositoryFactory'],
+    inject: ['repositoryFactory', 'acl'],
 
     mixins: [
         Mixin.getByName('listing'),
@@ -38,7 +39,7 @@ Component.register('sw-blogcategory-list', {
             return this.repositoryFactory.create('blog_category');
         },
 
-        blogcategoryColumns() {
+        blogCategoryColumns() {
             return [{
                 property: 'name',
                 dataIndex: 'name',
@@ -49,12 +50,12 @@ Component.register('sw-blogcategory-list', {
                 primary: true,
             },{
                 property: 'createdAt',
-                dataIndex:'createdAt',
+                dataIndex: 'createdAt',
                 allowResize: true,
-                routerLink:'sw.blogcategory.detail',
-                label:'sw-blogcategory.list.columnCreatedAt',
-                inlineEdit:'string',
-                primary:true,
+                routerLink: 'sw.blogcategory.detail',
+                label: 'sw-blogcategory.list.columnCreatedAt',
+                inlineEdit: 'string',
+                primary: true,
             }];
         },
 
@@ -63,9 +64,7 @@ Component.register('sw-blogcategory-list', {
 
             blogcategoryCriteria.setTerm(this.term);
             blogcategoryCriteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection, this.naturalSorting));
-            blogcategoryCriteria.addAssociation('country');
-            blogcategoryCriteria.addAssociation('countryState');
-            blogcategoryCriteria.addAssociation('product');
+
             return blogcategoryCriteria;
         },
     },

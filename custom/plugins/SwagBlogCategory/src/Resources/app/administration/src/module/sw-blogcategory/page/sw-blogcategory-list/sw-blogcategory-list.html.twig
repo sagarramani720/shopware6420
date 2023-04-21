@@ -45,9 +45,11 @@
                     <sw-button
                         v-tooltip.bottom="{
                 message: $tc('sw-privileges.tooltip.warning'),
+                disabled: acl.can('blog_category.creator'),
                 showOnDisabledElements: true
             }"
                         :router-link="{ name: 'sw.blogcategory.create' }"
+                        :disabled="!acl.can('blog_category.creator')"
                         class="sw-blogcategory-list__add-blogcategory"
                         variant="primary"
                     >
@@ -75,31 +77,35 @@
                             class="sw-blogcategory-list__grid"
                             detail-route="sw.blogcategory.detail"
                             :is-loading="isLoading"
-                            :columns="blogcategoryColumns"
+                            :columns="blogCategoryColumns"
                             :repository="blogcategoryRepository"
                             :items="blogcategory"
                             :criteria-limit="limit"
                             :sort-by="currentSortBy"
                             :sort-direction="sortDirection"
                             :disable-data-fetching="true"
+                            :allow-edit="acl.can('blog_category.editor')"
+                            :allow-inline-edit="acl.can('blog_category.editor')"
+                            :allow-delete="acl.can('blog_category.deleter')"
+                            :show-selections="acl.can('blog_category.deleter')"
                             identifier="sw-blogcategory-list"
                             @update-records="updateTotal"
                             @page-change="onPageChange"
                             @column-sort="onSortColumn"
                         >
-
                             <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_blogcategory_list_grid_columns_active %}
-                                <template #column-active="{ item, isInlineEdit }">
-                                    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                                    {% block sw_blogcategory_list_grid_columns_active_inline_edit %}
-                                        <template v-if="isInlineEdit">
-                                            <sw-checkbox-field v-model="item.active" />
-                                        </template>
-                                    {% endblock %}
+                            {% block sw_testdemo_list_content_list_created_at %}
+                                <template #column-createdAt="{ item }">
+                                    {{ item.createdAt | date({hour: '2-digit', minute: '2-digit', second: '2-digit'}) }}
                                 </template>
                             {% endblock %}
 
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_blogcategory_list_grid_columns_name_preview %}
+                                <template #preview-name="{ item }">
+                                    <sw-media-preview-v2 :source="item.mediaId" />
+                                </template>
+                            {% endblock %}
                         </sw-entity-listing>
                     {% endblock %}
 
