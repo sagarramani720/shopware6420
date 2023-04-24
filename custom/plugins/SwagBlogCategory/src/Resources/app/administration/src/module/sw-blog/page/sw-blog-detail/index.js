@@ -177,26 +177,36 @@ Component.register('sw-blog-detail', {
 
         async loadEntityData() {
             this.isLoading = true;
-            const [blogResponse, customFieldResponse] = await Promise.allSettled([
-                this.blogRepository.get(this.blogId),
-                this.customFieldSetRepository.search(this.customFieldSetCriteria),
-            ]);
+            const blogCriteria = new Criteria();
+            blogCriteria.addFilter(Criteria.equals('id',this.blogId))
+            blogCriteria.addAssociation('blogCategories');
+            blogCriteria.addAssociation('productCategories');
+            this.blogRepository.search(blogCriteria,Context.api).then((res)=>{
+                this.blog=res[0];
+                this.billingCategories=this.blog.blogCategories;
+                this.billingProducts=this.blog.productCategories;
+            })
 
-            if (blogResponse.status === 'fulfilled') {
-                this.blog = blogResponse.value;
-            }
-
-            if (customFieldResponse.status === 'fulfilled') {
-                this.customFieldSets = customFieldResponse.value;
-            }
-
-            if (blogResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
-                this.createNotificationError({
-                    message: this.$tc(
-                        'global.notification.notificationLoadingDataErrorMessage',
-                    ),
-                });
-            }
+            // const [blogResponse, customFieldResponse] = await Promise.allSettled([
+            //     this.blogRepository.get(this.blogId),
+            //     this.customFieldSetRepository.search(this.customFieldSetCriteria),
+            // ]);
+            //
+            // if (blogResponse.status === 'fulfilled') {
+            //     this.blog = blogResponse.value;
+            // }
+            //
+            // if (customFieldResponse.status === 'fulfilled') {
+            //     this.customFieldSets = customFieldResponse.value;
+            // }
+            //
+            // if (blogResponse.status === 'rejected' || customFieldResponse.status === 'rejected') {
+            //     this.createNotificationError({
+            //         message: this.$tc(
+            //             'global.notification.notificationLoadingDataErrorMessage',
+            //         ),
+            //     });
+            // }
 
             this.isLoading = false;
         },
@@ -218,7 +228,6 @@ Component.register('sw-blog-detail', {
             if (!this.acl.can('blog_child.editor')) {
                 return;
             }
-            console.log(this.blog);
             this.isLoading = true;
             this.blogRepository.save(this.blog).then(() => {
                 this.isLoading = false;

@@ -26,10 +26,10 @@ Module.register('sw-blog',{
     favicon: 'icon-module-products.png',
     entity: 'blog_child',
 
-    snippets: {
-        'de-DE': deDE,
-        'en-GB': enGB
-    },
+    // snippets: {
+    //     'de-DE': deDE,
+    //     'en-GB': enGB
+    // },
 
     routes: {
         index: {
