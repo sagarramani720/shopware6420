@@ -1,0 +1,31 @@
+{
+    "sw-cms": {
+        "blocks": {
+            "text": {
+                "blog-text": {
+                    "label": "My First Text Blog!"
+                }
+            }
+        },
+        "elements": {
+            "blog-text": {
+                "label": "My First Blog"
+            },
+            "general": {
+                "config": {
+                    "label": {
+                        "content": "Text",
+                        "verticalAlign": "Vertical align",
+                        "verticalAlignTop": "Top",
+                        "verticalAlignCenter": "Center",
+                        "verticalAlignBottom": "Bottom"
+                    },
+                    "tab": {
+                        "content": "Content",
+                        "settings": "Settings"
+                    }
+                }
+            }
+        }
+    }
+}
