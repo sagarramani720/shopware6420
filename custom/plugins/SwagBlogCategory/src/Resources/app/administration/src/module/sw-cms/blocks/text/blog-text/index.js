@@ -20,20 +20,6 @@ Shopware.Service('cmsService').registerCmsBlock({
         sizingMode: 'boxed',
     },
     slots: {
-        content: {
-            type: 'blog-text',
-            default: {
-                config: {
-                    content: {
-                        source: 'static',
-                        value: `
-                        <h2 style="text-align: center;">First blog-text cms</h2>
-                        <p style="text-align: center;"><i>This is a first text-field cms block add in backend and show in storefront.
-                        In this cms block show storefront side.
-                        Very simple process to add and show cms text-field in storefront.</i></p>`.trim(),
-                    },
-                },
-            },
-        },
+        content: 'blog-text',
     },
 });

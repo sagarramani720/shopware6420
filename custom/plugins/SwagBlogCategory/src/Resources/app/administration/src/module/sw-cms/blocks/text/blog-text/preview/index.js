@@ -1,5 +1,5 @@
-import template from './sw-cms-preview-blog-text.html.twig'
-import './sw-cms-preview-blog-text.scss';
+import template from './sw-cms-preview-text.html.twig';
+import './sw-cms-preview-text.scss';
 
 const { Component } = Shopware;
 

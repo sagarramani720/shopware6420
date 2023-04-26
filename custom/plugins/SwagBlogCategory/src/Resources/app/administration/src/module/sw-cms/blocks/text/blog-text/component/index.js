@@ -1,5 +1,4 @@
-import template from './sw-cms-block-blog-text.html.twig';
-
+import template from './sw-cms-block-text.html.twig';
 const { Component } = Shopware;
 
 /**

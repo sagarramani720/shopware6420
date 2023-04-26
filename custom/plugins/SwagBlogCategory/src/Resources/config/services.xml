@@ -52,5 +52,12 @@
             <tag name="shopware.entity.extension"/>
         </service>
         <!-- End product extension service -->
+
+        <!-- Start cms media blog service -->
+        <service id="SwagBlogCategory\Core\Content\blogImages\cms\blogImageCmsElementResolver">
+            <tag name="shopware.cms.data_resolver"/>
+            <argument type="service" id="Shopware\Core\Content\Media\Cms\DefaultMediaResolver"/>
+        </service>
+        <!-- End cms media blog service -->
     </services>
 </container>

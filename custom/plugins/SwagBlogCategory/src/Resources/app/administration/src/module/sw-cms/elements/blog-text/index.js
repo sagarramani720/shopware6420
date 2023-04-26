@@ -16,9 +16,10 @@ Shopware.Service('cmsService').registerCmsElement({
         content: {
             source: 'static',
             value: `
-                <h2>First blog cms</h2>
+                <h2><center>First blog cms</center></h2>
+                This is a first text field cms block add in backend and show in storefront.
                 In this cms block show storefront side.
-                        Very simple process to add and show cms text field in storefront.</i></p>`.trim(),
+                Very simple process to add and show cms text field in storefront.</i></p>`.trim(),
         },
         verticalAlign: {
             source: 'static',
