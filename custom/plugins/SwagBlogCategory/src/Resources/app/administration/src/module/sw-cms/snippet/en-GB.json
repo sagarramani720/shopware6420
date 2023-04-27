@@ -10,6 +10,14 @@
                 "blog-text-image": {
                     "label": "My First Image Text Blog!"
                 }
+            },
+            "commerce": {
+                "ictechProductSlider": {
+                    "label": "My First Product Slider!"
+                },
+                "ictechVideoImageText": {
+                    "label": "My First Video Image Text Cms!"
+                }
             }
         },
         "elements": {

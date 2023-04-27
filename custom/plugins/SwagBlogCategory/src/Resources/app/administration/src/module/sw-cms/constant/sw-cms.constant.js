@@ -7,7 +7,6 @@ const uniqueSlotsKebab = [
 /**
  * @package content
  */
-// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 export default Object.freeze({
     REQUIRED_FIELD_ERROR_CODE: 'c1051bb4-d103-4f74-8988-acbcafc7fdc3',
     PAGE_TYPES: {
