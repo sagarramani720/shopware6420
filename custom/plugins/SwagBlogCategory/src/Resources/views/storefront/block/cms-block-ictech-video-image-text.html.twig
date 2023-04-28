@@ -1,0 +1,28 @@
+{% block block_video_image_text_left %}
+    {% set element = block.slots.getSlot('image') %}
+    {% set columns = 1 %}
+    <div class="col-4" data-cms-element-id="{{ element.id }}">
+        {% block block_text_inner %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block block_video_image_text_youtube_video %}
+    {% set element = block.slots.getSlot('video') %}
+    <div class="col-4" data-cms-element-id="{{ element.id }}">
+        {% block block_image_inner %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block block_video_image_text_right %}
+    {% set element = block.slots.getSlot('content') %}
+    {% set columns = 1 %}
+    <div class="col-4" data-cms-element-id="{{ element.id }}">
+        {% block block_text_outer %}
+            {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% endblock %}
+    </div>
+{% endblock %}

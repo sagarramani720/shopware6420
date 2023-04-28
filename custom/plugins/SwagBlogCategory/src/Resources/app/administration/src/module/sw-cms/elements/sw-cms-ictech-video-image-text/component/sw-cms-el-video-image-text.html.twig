@@ -1,0 +1,24 @@
+{% block sw_cms_element_video_image_text %}
+<div
+    class="sw-cms-el-video-image-text-youtube-video"
+    :class="displayModeClass"
+>
+    <div
+        class="sw-cms-el-video-image-text"
+        :class="displayModeClass"
+        :style="styles"
+    >
+        <iframe
+            class="sw-cms-el-video-image-text-youtube-video__video"
+            :src="videoUrl"
+        ></iframe>
+
+        {% block sw_cms_element_video_image_text_content %}
+            <img
+                :src="mediaUrl"
+                :style="imgStyles"
+                alt=""
+            >
+        {% endblock %}
+    </div>
+{% endblock %}

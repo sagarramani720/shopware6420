@@ -22,10 +22,13 @@
         },
         "elements": {
             "blog-text": {
-                "label": "My First Blog"
+                "label": "My First Blog!"
             },
             "image": {
                 "label": "My First Image Blog!"
+            },
+            "videoImageText": {
+                "label": "My First Video Image Text!"
             },
             "general": {
                 "config": {

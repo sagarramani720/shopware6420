@@ -1,9 +1,8 @@
 .sw-cms-preview-video-image-text-three-column {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 20px;
+    grid-column-gap: 15px;
     padding: 15px;
-    height: 200px;
 
     &__img {
         display: block;

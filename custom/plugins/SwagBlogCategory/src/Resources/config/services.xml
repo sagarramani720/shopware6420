@@ -53,20 +53,26 @@
         </service>
         <!-- End product extension service -->
 
-        <!-- Start cms media blog service -->
+        <!-- Start media blog cms service -->
         <service id="SwagBlogCategory\Core\Content\blogImages\cms\blogImageCmsElementResolver">
             <tag name="shopware.cms.data_resolver"/>
             <argument type="service" id="Shopware\Core\Content\Media\Cms\DefaultMediaResolver"/>
         </service>
-        <!-- End cms media blog service -->
+        <!-- End media blog cms service -->
 
-        <!-- Start cms product slider service -->
+        <!-- Start product slider cms service -->
             <service id="SwagBlogCategory\Core\Content\ictechProducts\cms\IctechProductSliderCmsElementResolver">
                 <tag name="shopware.cms.data_resolver"/>
                 <argument type="service" id="Shopware\Core\Content\ProductStream\Service\ProductStreamBuilder"/>
                 <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
             </service>
-        <!-- End cms product slider service -->
+        <!-- End product slider cms service -->
 
+        <!-- Start video image text cms service -->
+        <service id="SwagBlogCategory\Core\Content\ictechVideoImageTaxes\cms\IctechVideoImageTextCmsElementResolver">
+            <tag name="shopware.cms.data_resolver"/>
+            <argument type="service" id="Shopware\Core\Content\Media\Cms\DefaultMediaResolver"/>
+        </service>
+        <!-- End video image text cms service -->
     </services>
 </container>

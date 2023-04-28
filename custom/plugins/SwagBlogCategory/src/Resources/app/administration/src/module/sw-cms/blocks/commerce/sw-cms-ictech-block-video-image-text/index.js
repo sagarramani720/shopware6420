@@ -1,5 +1,6 @@
 import './component';
 import './preview';
+import CMS from "../../../constant/sw-cms.constant";
 
 /**
  * @private since v6.5.0
@@ -20,6 +21,36 @@ Shopware.Service('cmsService').registerCmsBlock({
         sizingMode: 'boxed',
     },
     slots: {
-        productSlider: 'ictech-video-image-text',
+        image: {
+            type: 'image',
+            default: {
+                config: {
+                    displayMode: { source: 'static', value: 'standard' },
+                },
+                data: {
+                    media: {
+                        value: CMS.MEDIA.previewMountain,
+                        source: 'default',
+                    },
+                },
+            },
+        },
+        content: {
+            type: 'text',
+            default: {
+                config: {
+                    content: {
+                        source: 'static',
+                        value: `
+                        <h2 style="text-align: center;">First Video Image Text Cms!</h2>
+                        <hr>
+                        <p style="text-align: center;"> Image result for simple textbox image text description
+                        A text box is an object you can add to your document that lets you put and type
+                        text anywhere in your file..</p>`.trim(),
+                    },
+                },
+            },
+        },
+        video: 'youtube-video',
     },
 });

@@ -1,0 +1,299 @@
+{% block sw_cms_element_video_image_text_config %}
+    <div class="sw-cms-el-config-video-image-text">
+
+        {% block sw_cms_element_video_image_text_youtube_video_config_video_id %}
+            <sw-text-field
+                v-model="videoID"
+                class="sw-cms-el-config-video-image-text-youtube-video__video-id"
+                :label="$tc('sw-cms.elements.vimeoVideo.config.label.videoId')"
+                :placeholder="$tc('sw-cms.elements.vimeoVideo.config.placeholder.videoId')"
+            />
+        {% endblock %}
+
+        <div class="sw-cms-el-config-video-image-text-youtube-video__switches">
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_autoplay %}
+                <sw-switch-field
+                    v-model="element.config.autoPlay.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.autoPlay')"
+                    :help-text="$tc('sw-cms.elements.vimeoVideo.config.helpText.autoPlay')"
+                />
+            {% endblock %}
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_loop %}
+                <sw-switch-field
+                    v-model="element.config.loop.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.loop')"
+                />
+            {% endblock %}
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_show_controls %}
+                <sw-switch-field
+                    v-model="element.config.showControls.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.showControls')"
+                />
+            {% endblock %}
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_advanced_privacy_mode %}
+                <sw-switch-field
+                    v-model="element.config.advancedPrivacyMode.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.advancedPrivacy')"
+                    :help-text="$tc('sw-cms.elements.vimeoVideo.config.helpText.advancedPrivacy')"
+                />
+            {% endblock %}
+        </div>
+
+        <div class="sw-cms-el-config-video-image-text-youtube-video__start-and-end">
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_start %}
+                <sw-text-field
+                    :value="startValue"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.start')"
+                    placeholder="0:00"
+                    @change="setTimeValue($event, 'start')"
+                />
+            {% endblock %}
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_end %}
+                <sw-text-field
+                    :value="endValue"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.end')"
+                    placeholder="0:00"
+                    @change="setTimeValue($event, 'end')"
+                />
+            {% endblock %}
+        </div>
+
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_cms_element_video_image_text_youtube_video_config_display_mode %}
+            <sw-select-field
+                v-model="element.config.displayMode.value"
+                :placeholder="$tc('sw-cms.elements.general.config.label.displayMode')"
+                :label="$tc('sw-cms.elements.general.config.label.displayMode')"
+            >
+                <option value="standard">
+                    {{ $tc('sw-cms.elements.general.config.label.displayModeStandard') }}
+                </option>
+                <option value="streched">
+                    {{ $tc('sw-cms.elements.general.config.label.displayModeStretch') }}
+                </option>
+            </sw-select-field>
+        {% endblock %}
+
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_cms_element_video_image_text_youtube_video_config_needs_confirmation %}
+            <div class="sw-cms-el-config-youtube-video__confirmation">
+                <sw-switch-field
+                    v-model="element.config.needsConfirmation.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.needsConfirmation')"
+                />
+            </div>
+        {% endblock %}
+
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_cms_element_video_image_text_youtube_video_config_needs_confirmation %}
+            <div class="sw-cms-el-config-video-image-text-youtube-video__confirmation">
+                <sw-switch-field
+                    v-model="element.config.needsConfirmation.value"
+                    :label="$tc('sw-cms.elements.vimeoVideo.config.label.needsConfirmation')"
+                />
+            </div>
+        {% endblock %}
+
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_cms_element_video_image_text_youtube_video_config_preview_media %}
+            <sw-cms-mapping-field
+                v-if="element.config.needsConfirmation.value"
+                v-model="element.config.previewMedia"
+                :label="$tc('sw-cms.elements.vimeoVideo.config.label.previewImage')"
+                value-types="entity"
+                entity="media"
+            >
+                <sw-media-upload-v2
+                    variant="regular"
+                    :upload-tag="uploadTag"
+                    :source="previewSource"
+                    :allow-multi-select="false"
+                    :default-folder="cmsPageState.pageEntityName"
+                    :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                    @media-upload-sidebar-open="onOpenMediaModal"
+                    @media-upload-remove-image="onImageRemove"
+                />
+
+                <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                {% block sw_cms_element_video_image_text_youtube_video_config_preview_media_display %}
+                    <div
+                        slot="preview"
+                        slot-scope="{ demoValue }"
+                        class="sw-cms-el-config-video-image-text__mapping-preview"
+                    >
+                        <img
+                            v-if="demoValue.url"
+                            :src="demoValue.url"
+                            alt=""
+                        >
+                        <sw-alert
+                            v-else
+                            class="sw-cms-el-config-video-image-text__preview-info"
+                            variant="info"
+                        >
+                            {{ $tc('sw-cms.detail.label.mappingEmptyPreview') }}
+                        </sw-alert>
+                    </div>
+                {% endblock %}
+            </sw-cms-mapping-field>
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_preview_media_upload_listener %}
+                <sw-upload-listener
+                    :upload-tag="uploadTag"
+                    auto-upload
+                    @media-upload-finish="onImageUpload"
+                />
+            {% endblock %}
+
+            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+            {% block sw_cms_element_video_image_text_youtube_video_config_preview_media_modal %}
+                <sw-media-modal-v2
+                    v-if="mediaModalIsOpen"
+                    variant="regular"
+                    :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                    :entity-context="cmsPageState.entityName"
+                    :allow-multi-select="false"
+                    :initial-folder-id="cmsPageState.defaultMediaFolderId"
+                    @media-upload-remove-image="onImageRemove"
+                    @media-modal-selection-change="onSelectionChanges"
+                    @modal-close="onCloseModal"
+                />
+            {% endblock %}
+        {% endblock %}
+
+        {% block sw_cms_element_video_image_text_video_image_text_config_media_upload %}
+            <sw-cms-mapping-field
+                v-model="element.config.media"
+                :label="$tc('sw-cms.elements.image.label')"
+                value-types="entity"
+                entity="media"
+            >
+                <sw-media-upload-v2
+                    variant="regular"
+                    :upload-tag="uploadTag"
+                    :source="previewSource"
+                    :allow-multi-select="false"
+                    :default-folder="cmsPageState.pageEntityName"
+                    :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                    @media-upload-sidebar-open="onOpenMediaModal"
+                    @media-upload-remove-image="onImageRemove"
+                />
+
+                <div
+                    slot="preview"
+                    slot-scope="{ demoValue }"
+                    class="sw-cms-el-config-video-image-text__mapping-preview"
+                >
+                    <img
+                        v-if="demoValue.url"
+                        :src="demoValue.url"
+                        alt=""
+                    >
+                    <sw-alert
+                        v-else
+                        class="sw-cms-el-config-video-image-text__preview-info"
+                        variant="info"
+                    >
+                        {{ $tc('sw-cms.detail.label.mappingEmptyPreview') }}
+                    </sw-alert>
+                </div>
+            </sw-cms-mapping-field>
+
+            <sw-upload-listener
+                :upload-tag="uploadTag"
+                auto-upload
+                @media-upload-finish="onImageUpload"
+            />
+        {% endblock %}
+
+        {% block sw_cms_element_video_image_text_config_display_mode %}
+            <sw-select-field
+                v-model="element.config.displayMode.value"
+                class="sw-cms-el-config-video-image-text__display-mode"
+                :label="$tc('sw-cms.elements.general.config.label.displayMode')"
+                @change="onChangeDisplayMode"
+            >
+                <option value="standard">
+                    {{ $tc('sw-cms.elements.general.config.label.displayModeStandard') }}
+                </option>
+                <option value="cover">
+                    {{ $tc('sw-cms.elements.general.config.label.displayModeCover') }}
+                </option>
+                <option value="stretch">
+                    {{ $tc('sw-cms.elements.general.config.label.displayModeStretch') }}
+                </option>
+            </sw-select-field>
+        {% endblock %}
+
+        <template v-if="element.config.displayMode.value === 'cover'">
+            {% block sw_cms_element_video_image_text_config_min_height %}
+                <sw-text-field
+                    v-model="element.config.minHeight.value"
+                    :label="$tc('sw-cms.elements.image.config.label.minHeight')"
+                    :placeholder="$tc('sw-cms.elements.image.config.placeholder.enterMinHeight')"
+                    @input="onChangeMinHeight"
+                />
+            {% endblock %}
+        </template>
+
+        {% block sw_cms_element_video_image_text_config_vertical_align %}
+            <sw-select-field
+                v-model="element.config.verticalAlign.value"
+                :label="$tc('sw-cms.elements.general.config.label.verticalAlign')"
+                :placeholder="$tc('sw-cms.elements.general.config.label.verticalAlign')"
+                :disabled="element.config.displayMode.value === 'cover'"
+            >
+                <option value="flex-start">
+                    {{ $tc('sw-cms.elements.general.config.label.verticalAlignTop') }}
+                </option>
+                <option value="center">
+                    {{ $tc('sw-cms.elements.general.config.label.verticalAlignCenter') }}
+                </option>
+                <option value="flex-end">
+                    {{ $tc('sw-cms.elements.general.config.label.verticalAlignBottom') }}
+                </option>
+            </sw-select-field>
+        {% endblock %}
+
+        {% block sw_cms_element_video_image_text_config_link %}
+            <div class="sw-cms-el-config-video-image-text__link">
+                <sw-dynamic-url-field
+                    v-model="element.config.url.value"
+                />
+                <sw-field
+                    v-model="element.config.newTab.value"
+                    class="sw-cms-el-config-video-image-text__link-tab"
+                    type="switch"
+                    :label="$tc('sw-cms.elements.image.config.label.linkNewTab')"
+                />
+            </div>
+        {% endblock %}
+
+        {% block sw_cms_element_video_image_text_config_media_modal %}
+            <sw-media-modal-v2
+                v-if="mediaModalIsOpen"
+                variant="regular"
+                :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                :entity-context="cmsPageState.entityName"
+                :allow-multi-select="false"
+                :initial-folder-id="cmsPageState.defaultMediaFolderId"
+                @media-upload-remove-image="onImageRemove"
+                @media-modal-selection-change="onSelectionChanges"
+                @modal-close="onCloseModal"
+            />
+        {% endblock %}
+    </div>
+{% endblock %}
