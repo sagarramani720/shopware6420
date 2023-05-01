@@ -1,0 +1,41 @@
+{
+  "name": "ict/ictech-high-to-low-discount-product-slider",
+  "description": "Product Slider Show High To Low Discount",
+  "type": "shopware-platform-plugin",
+  "version": "v1.0.0",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "ICTECHHightoLowDiscountProductSlider\\": "src/"
+    }
+  },
+  "require": {
+    "shopware/core": "^6.4",
+    "shopware/storefront": "^6.4",
+    "shopware/administration": "^6.4"
+  },
+  "extra": {
+    "shopware-plugin-class": "ICTECHHightoLowDiscountProductSlider\\ICTECHHightoLowDiscountProductSlider",
+    "plugin-icon": "",
+    "label": {
+      "de-DE": "Schieberegler für das Produkt mit dem höchsten Rabatt",
+      "en-GB": "Highest Discount Product Slider",
+      "nl-NL": "Hoogste korting product schuifregelaar"
+    },
+    "description": {
+        "de-DE": "Produktschieberegler mit hohem bis niedrigem Rabatt",
+        "en-GB": "High to low discount product slider",
+        "nl-NL": "Productschuifregelaar met hoge naar lage korting"
+    },
+    "manufacturerLink": {
+        "de-DE": "https://www.icreativetechnologies.com",
+        "en-GB": "https://www.icreativetechnologies.com",
+        "nl-NL": "https://www.icreativetechnologies.com"
+    },
+    "supportLink": {
+        "de-DE": "https://support.icreativetechnologies.com/",
+        "en-GB": "https://support.icreativetechnologies.com/",
+        "nl-NL": "https://support.icreativetechnologies.com/"
+    }
+  }
+}
