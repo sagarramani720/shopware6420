@@ -1,5 +1,5 @@
-import template from './sw-cms-el-high-to-low-product-discount-slider.html.twig';
-import './sw-cms-el-high-to-low-product-discount-slider.scss';
+import template from './sw-cms-el-discount-product-slider.html.twig';
+import './sw-cms-el-discount-product-slider.scss';
 
 const { Component, Mixin } = Shopware;
 
@@ -7,7 +7,7 @@ const { Component, Mixin } = Shopware;
  * @private since v6.5.0
  * @package content
  */
-Component.register('sw-cms-el-high-to-low-product-discount-slider', {
+Component.register('sw-cms-el-discount-product-slider', {
     template,
 
     inject: ['feature'],
@@ -95,8 +95,8 @@ Component.register('sw-cms-el-high-to-low-product-discount-slider', {
 
     methods: {
         createdComponent() {
-            this.initElementConfig('ictech-high-to-low-product-discount');
-            this.initElementData('ictech-high-to-low-product-discount');
+            this.initElementConfig('discount-product-slider');
+            this.initElementData('discount-product-slider');
         },
 
         mountedComponent() {

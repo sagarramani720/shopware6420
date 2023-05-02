@@ -1,42 +1,42 @@
-{% block sw_cms_element_high_to_low_product_discount_slider %}
+{% block sw_cms_element_discount_product_slider %}
     <div
-        class="sw-cms-el-high-to-low-product-discount-slider"
+        class="sw-cms-el-discount-product-slider"
         :class="classes"
         :style="verticalAlignStyle"
     >
-        {% block sw_cms_element_high_to_low_product_discount_slider_title %}
+        {% block sw_cms_element_discount_product_slider_title %}
             <div
                 v-if="element.config.title.value"
-                class="sw-cms-el-high-to-low-product-discount-slider__title"
+                class="sw-cms-el-discount-product-slider__title"
             >
                 {{ element.config.title.value }}
             </div>
         {% endblock %}
 
-        {% block sw_cms_element_high_to_low_product_discount_slider_content %}
-            <div class="sw-cms-el-high-to-low-product-discount-slider__content">
-                {% block sw_cms_element_high_to_low_product_discount_slider_arrow_left %}
+        {% block sw_cms_element_discount_product_slider_content %}
+            <div class="sw-cms-el-discount-product-slider__content">
+                {% block sw_cms_element_discount_product_slider_arrow_left %}
                     <div
                         v-if="hasNavigation"
-                        class="sw-cms-el-high_to_low_product-discount-slider__navigation"
+                        class="sw-cms-el-discount-product-slider__navigation"
                     >
                         <sw-icon
-                            class="sw-cms-el-high-to-low-product-discount-slider__navigation-button"
+                            class="sw-cms-el-discount-product-slider__navigation-button"
                             name="regular-chevron-left"
                             size="24"
                         />
                     </div>
                 {% endblock %}
 
-                {% block sw_cms_element_high_to_low_product_discount_slider_product_holder %}
+                {% block sw_cms_element_discount_product_slider_product_holder %}
                     <div
                         ref="productHolder"
-                        class="sw-cms-el-high-to-low-product-discount-slider__product-holder"
+                        class="sw-cms-el-discount-product-slider__product-holder"
                         :style="sliderBoxMinWidth"
                     >
                         <template v-if="!element.data || !element.data.products">
-                            {% block sw_cms_element_high_to_low_product_discount_slider_demo_data %}
-                                <sw-cms-el-high-to-low-product-discount-slider-box
+                            {% block sw_cms_element_discount_product_slider_demo_data %}
+                                <sw-cms-el-product-box
                                     v-for="index in sliderBoxLimit"
                                     :key="index"
                                     :element="demoProductElement"
@@ -45,8 +45,8 @@
                         </template>
 
                         <template v-else>
-                            {% block sw_cms_element_high_to_low_product_discount_slider_products %}
-                                <sw-cms-el-high-to-low-product-discount-slider-box
+                            {% block sw_cms_element_discount_product_slider_products %}
+                                <sw-cms-el-product-box
                                     v-for="(product, index) in element.data.products"
                                     v-if="index < sliderBoxLimit"
                                     :key="product.id"
@@ -57,13 +57,13 @@
                     </div>
                 {% endblock %}
 
-                {% block sw_cms_element_high_to_low_product_discount_slider_arrow_right %}
+                {% block sw_cms_element_discount_product_slider_arrow_right %}
                     <div
                         v-if="hasNavigation"
-                        class="sw-cms-el-high-to-low-product-discount-slider__navigation"
+                        class="sw-cms-el-discount-product-slider__navigation"
                     >
                         <sw-icon
-                            class="sw-cms-el-high-to-low-product-discount-slider__navigation-button"
+                            class="sw-cms-el-discount-product-slider__navigation-button"
                             name="regular-chevron-right"
                             size="24"
                         />

@@ -1,0 +1,11 @@
+{
+    "sw-cms": {
+        "blocks": {
+            "commerce": {
+                "discountProductSlider": {
+                    "label": "High To Low Discount Product Slider"
+                }
+            }
+        }
+    }
+}

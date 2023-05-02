@@ -1,6 +1,6 @@
-import './preview';
-import './config';
 import './component';
+import './config';
+import './preview';
 
 const Criteria = Shopware.Data.Criteria;
 const criteria = new Criteria(1, 25);
@@ -12,11 +12,11 @@ criteria.addAssociation('cover');
  */
 
 Shopware.Service('cmsService').registerCmsElement({
-    name: 'ictech-product-discount-slider',
-    label: 'sw-cms.elements.ictech.highToLowDiscountProductSlider.label',
-    component: 'sw-cms-el-high-to-low-product-discount-slider',
-    configComponent: 'sw-cms-el-config-high-to-low-product-discount-slider',
-    previewComponent: 'sw-cms-el-preview-high-to-low-product-discount-slider',
+    name: 'discount-product-slider',
+    label: 'sw-cms.elements.discountProductSlider.label',
+    component: 'sw-cms-el-discount-product-slider',
+    configComponent: 'sw-cms-el-config-discount-product-slider',
+    previewComponent: 'sw-cms-el-preview-discount-product-slider',
     defaultConfig: {
         products: {
             source: 'static',

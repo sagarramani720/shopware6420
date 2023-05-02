@@ -1,13 +1,13 @@
-{% block sw_cms_element_high_to_low_product_discount_slider_config %}
-    <div class="sw-cms-el-config-high-to-low-product-discount-slider">
-        {% block sw_cms_element_high_to_low_product_discount_slider_config_tabs %}
+{% block sw_cms_element_discount_product_slider_config %}
+    <div class="sw-cms-el-config-discount-product-slider">
+        {% block sw_cms_element_discount_product_slider_config_tabs %}
             <sw-tabs
-                position-identifier="sw-cms-element-config-high-to-low-product-discount-slider"
-                class="sw-cms-el-config-high-to-low-product-discount-slider__tabs"
+                position-identifier="sw-cms-element-config-discount-product-slider"
+                class="sw-cms-el-config-discount-product-slider__tabs"
                 default-item="content"
             >
                 <template slot-scope="{ active }">
-                    {% block sw_cms_element_high_to_low_product_discount_slider_config_tab_content %}
+                    {% block sw_cms_element_discount_product_slider_config_tab_content %}
                         <sw-tabs-item
                             :title="$tc('sw-cms.elements.general.config.tab.content')"
                             name="content"
@@ -16,7 +16,7 @@
                             {{ $tc('sw-cms.elements.general.config.tab.content') }}
                         </sw-tabs-item>
                     {% endblock %}
-                    {% block sw_cms_element_high_to_low_product_discount_slider_config_tab_options %}
+                    {% block sw_cms_element_discount_product_slider_config_tab_options %}
                         <sw-tabs-item
                             :title="$tc('sw-cms.elements.general.config.tab.settings')"
                             name="settings"
@@ -31,12 +31,12 @@
                     slot="content"
                     slot-scope="{ active }"
                 >
-                    {% block sw_cms_element_high_to_low_product_discount_slider_config_content %}
+                    {% block sw_cms_element_discount_product_slider_config_content %}
                         <sw-container
                             v-if="active === 'content'"
-                            class="sw-cms-el-config-high-to-low-product-discount-slider__tab-content"
+                            class="sw-cms-el-config-discount-product-slider__tab-content"
                         >
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_content_title %}
+                            {% block sw_cms_element_discount_product_slider_config_content_title %}
                                 <sw-field
                                     v-model="element.config.title.value"
                                     type="text"
@@ -45,10 +45,10 @@
                                 />
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_assignment_type %}
+                            {% block sw_cms_element_discount_product_slider_config_content_product_assignment_type %}
                                 <sw-single-select
                                     v-model="element.config.products.source"
-                                    class="sw-cms-el-config-high-to-low-product-discount-slider__product-assignment-type-select"
+                                    class="sw-cms-el-config-discount-product-slider__product-assignment-type-select"
                                     :label="$tc('sw-cms.elements.productSlider.config.label.productAssignmentType')"
                                     :options="productAssignmentTypes"
                                     show-clearable-button
@@ -57,11 +57,11 @@
                             {% endblock %}
 
                             <template v-if="element.config.products.source === 'product_stream'">
-                                {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_select %}
+                                {% block sw_cms_element_discount_product_slider_config_content_product_stream_select %}
                                     <sw-entity-single-select
                                         v-model="element.config.products.value"
                                         entity="product_stream"
-                                        class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-select"
+                                        class="sw-cms-el-config-discount-product-slider__product-stream-select"
                                         :label="$tc('sw-cms.elements.productSlider.config.label.productStreamChoice')"
                                         :placeholder="$tc('sw-cms.elements.productSlider.config.placeholder.productStreamChoice')"
                                         show-clearable-button
@@ -69,23 +69,23 @@
                                     />
                                 {% endblock %}
 
-                                {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_performance_hint %}
+                                {% block sw_cms_element_discount_product_slider_config_content_product_stream_performance_hint %}
                                     <sw-alert
-                                        class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-performance-hint"
+                                        class="sw-cms-el-config-discount-product-slider__product-stream-performance-hint"
                                         variant="info"
                                     >
                                         {{ $tc('sw-cms.elements.productSlider.config.textProductStreamPerformanceHint') }}
                                     </sw-alert>
                                 {% endblock %}
 
-                                {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_preview %}
+                                {% block sw_cms_element_discount_product_slider_config_content_product_stream_preview %}
                                     <sw-modal
                                         v-if="showProductStreamPreview"
                                         :title="productStream.name"
-                                        class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-preview-modal"
+                                        class="sw-cms-el-config-discount-product-slider__product-stream-preview-modal"
                                         @modal-close="onCloseProductStreamModal"
                                     >
-                                        {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_preview_grid %}
+                                        {% block sw_cms_element_discount_product_slider_config_content_product_stream_preview_grid %}
                                             <sw-product-stream-grid-preview
                                                 :filters="productStream.apiFilter"
                                                 :columns="productStreamPreviewColumns"
@@ -93,7 +93,7 @@
                                             />
                                         {% endblock %}
                                         <template #modal-footer>
-                                            {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_preview_action_close %}
+                                            {% block sw_cms_element_discount_product_slider_config_content_product_stream_preview_action_close %}
                                                 <sw-button
                                                     size="small"
                                                     @click="onCloseProductStreamModal"
@@ -109,11 +109,11 @@
                                     columns="1fr 1fr"
                                     gap="30px"
                                 >
-                                    {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_sorting %}
+                                    {% block sw_cms_element_discount_product_slider_config_content_product_stream_sorting %}
                                         <sw-single-select
                                             v-model="element.config.productStreamSorting.value"
                                             :label="$tc('sw-cms.elements.productSlider.config.label.productStreamSorting')"
-                                            class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-sorting"
+                                            class="sw-cms-el-config-discount-product-slider__product-stream-sorting"
                                             :disabled="!productStream"
                                             :placeholder="$tc('sw-cms.elements.productSlider.config.placeholder.productStreamSorting')"
                                             :options="productStreamSortingOptions"
@@ -121,21 +121,21 @@
                                         />
                                     {% endblock %}
 
-                                    {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_limit %}
+                                    {% block sw_cms_element_discount_product_slider_config_content_product_stream_limit %}
                                         <sw-number-field
                                             v-model="element.config.productStreamLimit.value"
                                             :label="$tc('sw-cms.elements.productSlider.config.label.productStreamLimit')"
-                                            class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-limit"
+                                            class="sw-cms-el-config-discount-product-slider__product-stream-limit"
                                             :disabled="!productStream"
                                             :min="1"
                                         />
                                     {% endblock %}
                                 </sw-container>
 
-                                {% block sw_cms_element_high_to_low_product_discount_slider_config_content_product_stream_preview_link %}
-                                    <div class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-preview-link-container">
+                                {% block sw_cms_element_discount_product_slider_config_content_product_stream_preview_link %}
+                                    <div class="sw-cms-el-config-discount-product-slider__product-stream-preview-link-container">
                                         <a
-                                            class="sw-cms-el-config-high-to-low-product-discount-slider__product-stream-preview-link link"
+                                            class="sw-cms-el-config-discount-product-slider__product-stream-preview-link link"
                                             :class="{ 'is--disabled': !productStream }"
                                             href="#"
                                             @click.prevent="onClickProductStreamPreview"
@@ -150,11 +150,11 @@
                                 {% endblock %}
                             </template>
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_content_products %}
+                            {% block sw_cms_element_discount_product_slider_config_content_products %}
                                 <sw-entity-multi-select
                                     v-else
                                     v-model="productCollection"
-                                    class="sw-cms-el-config-high-to-low-product-discount-slider__products"
+                                    class="sw-cms-el-config-discount-product-slider__products"
                                     :label="$tc('sw-cms.elements.productSlider.config.label.selection')"
                                     :placeholder="$tc('sw-cms.elements.productSlider.config.placeholder.selection')"
                                     :context="productMultiSelectContext"
@@ -194,13 +194,13 @@
                         </sw-container>
                     {% endblock %}
 
-                    {% block sw_cms_element_high_to_low_product_discount_slider_config_settings %}
+                    {% block sw_cms_element_discount_product_slider_config_settings %}
                         <sw-container
                             v-if="active === 'settings'"
-                            class="sw-cms-el-config-high-to-low-product-discount-slider__tab-settings"
+                            class="sw-cms-el-config-discount-product-slider__tab-settings"
                         >
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_display_mode %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_display_mode %}
                                 <sw-select-field
                                     v-model="element.config.displayMode.value"
                                     :label="$tc('sw-cms.elements.general.config.label.displayMode')"
@@ -217,7 +217,7 @@
                                 </sw-select-field>
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_vertical_align %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_vertical_align %}
                                 <sw-select-field
                                     v-model="element.config.verticalAlign.value"
                                     :label="$tc('sw-cms.elements.general.config.label.verticalAlign')"
@@ -235,7 +235,7 @@
                                 </sw-select-field>
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_box_layout %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_box_layout %}
                                 <sw-select-field
                                     v-model="element.config.boxLayout.value"
                                     :label="$tc('sw-cms.elements.productBox.config.label.layoutType')"
@@ -252,7 +252,7 @@
                                 </sw-select-field>
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_navigation %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_navigation %}
                                 <sw-field
                                     v-model="element.config.navigation.value"
                                     type="switch"
@@ -261,7 +261,7 @@
                                 />
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_rotate %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_rotate %}
                                 <sw-field
                                     v-model="element.config.rotate.value"
                                     type="switch"
@@ -270,7 +270,7 @@
                                 />
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_border %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_border %}
                                 <sw-field
                                     v-model="element.config.border.value"
                                     type="switch"
@@ -279,7 +279,7 @@
                                 />
                             {% endblock %}
 
-                            {% block sw_cms_element_high_to_low_product_discount_slider_config_settings_min_width %}
+                            {% block sw_cms_element_discount_product_slider_config_settings_min_width %}
                                 <sw-field
                                     v-model="element.config.elMinWidth.value"
                                     type="text"

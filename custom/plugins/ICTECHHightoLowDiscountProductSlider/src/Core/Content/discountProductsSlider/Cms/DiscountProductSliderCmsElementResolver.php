@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace ICTECHHightoLowDiscountProductSlider\Core\Content\ictechHighToLowProductsDiscount\cms;
+namespace ICTECHHightoLowDiscountProductSlider\Core\Content\discountProductsSlider\Cms;
 
 use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
@@ -23,9 +23,10 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
+use function array_slice;
 
 #[Package('inventory')]
-class IctechHighTiLowProductDiscountSliderCmsElementResolver extends AbstractCmsElementResolver
+class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
 {
     private const PRODUCT_SLIDER_ENTITY_FALLBACK = 'product-slider-entity-fallback';
     private const STATIC_SEARCH_KEY = 'product-slider';
@@ -46,7 +47,7 @@ class IctechHighTiLowProductDiscountSliderCmsElementResolver extends AbstractCms
 
     public function getType(): string
     {
-        return 'ictech-product-discount-slider';
+        return 'discount-product-slider';
     }
 
     public function collect(CmsSlotEntity $slot, ResolverContext $resolverContext): ?CriteriaCollection
@@ -227,7 +228,7 @@ class IctechHighTiLowProductDiscountSliderCmsElementResolver extends AbstractCms
             'cover.id',
         ];
         shuffle($fields);
-        $fields = \array_slice($fields, 0, 2);
+        $fields = array_slice($fields, 0, 2);
         $direction = [FieldSorting::ASCENDING, FieldSorting::DESCENDING];
         $direction = $direction[random_int(0, 1)];
         foreach ($fields as $field) {

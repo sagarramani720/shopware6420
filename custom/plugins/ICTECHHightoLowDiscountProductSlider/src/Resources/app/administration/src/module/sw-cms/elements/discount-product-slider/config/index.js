@@ -1,5 +1,5 @@
-import template from './sw-cms-el-config-high-to-low-product-discount-slider.html.twig';
-import './sw-cms-el-config-high-to-low-product-discount-slider.scss';
+import template from './sw-cms-el-config-discount-product-slider.html.twig';
+import './sw-cms-el-config-discount-product-slider.scss';
 
 const { Component, Mixin } = Shopware;
 const { Criteria, EntityCollection } = Shopware.Data;
@@ -8,7 +8,7 @@ const { Criteria, EntityCollection } = Shopware.Data;
  * @private since v6.5.0
  * @package content
  */
-Component.register('sw-cms-el-config-high-to-low-product-discount-slider', {
+Component.register('sw-cms-el-config-discount-product-slider', {
     template,
 
     inject: ['repositoryFactory', 'feature'],
@@ -134,7 +134,7 @@ Component.register('sw-cms-el-config-high-to-low-product-discount-slider', {
 
     methods: {
         createdComponent() {
-            this.initElementConfig('product-slider');
+            this.initElementConfig('discount-product-slider');
 
             this.productCollection = new EntityCollection('/product', 'product', Shopware.Context.api);
 
