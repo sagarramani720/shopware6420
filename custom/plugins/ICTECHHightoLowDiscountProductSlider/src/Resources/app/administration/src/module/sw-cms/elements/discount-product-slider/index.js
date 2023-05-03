@@ -18,15 +18,15 @@ Shopware.Service('cmsService').registerCmsElement({
     configComponent: 'sw-cms-el-config-discount-product-slider',
     previewComponent: 'sw-cms-el-preview-discount-product-slider',
     defaultConfig: {
-        products: {
-            source: 'static',
-            value: [],
-            required: true,
-            entity: {
-                name: 'product',
-                criteria: criteria,
-            },
-        },
+        // products: {
+        //     source: 'static',
+        //     value: [],
+        //     required: true,
+        //     entity: {
+        //         name: 'product',
+        //         criteria: criteria,
+        //     },
+        // },
         title: {
             source: 'static',
             value: '',
@@ -59,14 +59,14 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: null,
         },
-        productStreamSorting: {
-            source: 'static',
-            value: 'name:ASC',
-        },
-        productStreamLimit: {
-            source: 'static',
-            value: 10,
-        },
+        // productStreamSorting: {
+        //     source: 'static',
+        //     value: 'name:ASC',
+        // },
+        // productStreamLimit: {
+        //     source: 'static',
+        //     value: 10,
+        // },
     },
     collect: Shopware.Service('cmsService').getCollectFunction(),
 });

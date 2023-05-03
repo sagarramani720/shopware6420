@@ -8,8 +8,9 @@
         <!-- Start high to low product discount slider cms service -->
         <service id="ICTECHHightoLowDiscountProductSlider\Core\Content\discountProductsSlider\Cms\DiscountProductSliderCmsElementResolver">
             <tag name="shopware.cms.data_resolver"/>
-            <argument type="service" id="Shopware\Core\Content\ProductStream\Service\ProductStreamBuilder"/>
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <argument type="service" id="Shopware\Core\Content\ProductStream\Service\ProductStreamBuilder"/>
+            <argument type="service" id="product.repository"/>
         </service>
         <!-- End high to low product discount slider cms service -->
     </services>
