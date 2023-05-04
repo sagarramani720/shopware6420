@@ -1,0 +1,13 @@
+{
+    "sw-cms": {
+        "elements": {
+            "category": {
+                "config": {
+                    "label": {
+                        "selection": "Category"
+                    }
+                }
+            }
+        }
+    }
+}

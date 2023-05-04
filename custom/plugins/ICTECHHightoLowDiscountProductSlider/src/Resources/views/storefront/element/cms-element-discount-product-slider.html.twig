@@ -2,7 +2,7 @@
     {% if not sliderConfig %}
         {% set sliderConfig = element.fieldConfig.elements %}
     {% endif %}
-    {% if element.data.products.elements %}
+    {% if element.data.elements %}
         <div
             class="cms-element-{{ element.type }}{% if sliderConfig.displayMode.value == "standard" and sliderConfig.verticalAlign.value %} has-vertical-alignment{% endif %}">
             {% block element_discount_product_slider_alignment %}
@@ -40,12 +40,13 @@
                             {% block element_discount_product_slider_element %}
                                 <div class="product-slider-container"
                                      data-product-slider-container="true">
-                                    {% for product in element.data.products.elements %}
+                                    {% for product in element.data.elements %}
                                         {% block element_discount_product_slider_inner_item %}
                                             <div class="product-slider-item">
                                                 {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
                                                     'layout': sliderConfig.boxLayout.value,
-                                                    'displayMode': sliderConfig.displayMode.value
+                                                    'displayMode': sliderConfig.displayMode.value,
+
                                                 } %}
                                             </div>
                                         {% endblock %}

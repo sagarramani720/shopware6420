@@ -6,30 +6,18 @@ use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
-use Shopware\Core\Content\Cms\DataResolver\ResolverContext\EntityResolverContext;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
-use Shopware\Core\Content\Cms\SalesChannel\Struct\ProductSliderStruct;
-use Shopware\Core\Content\Product\ProductCollection;
-use Shopware\Core\Content\Product\ProductDefinition;
-use Shopware\Core\Content\ProductStream\Service\ProductStreamBuilder;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Exception\InconsistentCriteriaIdsException;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 #[Package('inventory')]
 class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
 {
-    private const PRODUCT_SLIDER_ENTITY_FALLBACK = 'product-slider-entity-fallback';
-    private const STATIC_SEARCH_KEY = 'product-slider';
-    private const FALLBACK_LIMIT = 50;
-
-    /**
-     * @internal
-     */
-
     /**
      * @var SystemConfigService
      */
@@ -43,22 +31,20 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
     private EntityRepositoryInterface $productRepository;
 
     /**
-     * @var ProductStreamBuilder
+     * @var SalesChannelRepositoryInterface
      */
 
-    private ProductStreamBuilder $productStreamBuilder;
+    private SalesChannelRepositoryInterface $channelRepository;
 
     /**
      * @param SystemConfigService $systemConfigService
-     * @param ProductStreamBuilder $productStreamBuilder
-     * @param EntityRepositoryInterface $productRepository
+     * @param SalesChannelRepositoryInterface $channelRepository
      */
 
-    public function __construct(SystemConfigService $systemConfigService, ProductStreamBuilder $productStreamBuilder, EntityRepositoryInterface $productRepository)
+    public function __construct(SystemConfigService $systemConfigService, SalesChannelRepositoryInterface $channelRepository)
     {
-        $this->productStreamBuilder = $productStreamBuilder;
         $this->systemConfigService = $systemConfigService;
-        $this->productRepository = $productRepository;
+        $this->channelRepository = $channelRepository;
     }
 
     /**
@@ -94,9 +80,14 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
     {
         try {
             $config = $slot->getFieldConfig();
-            $context = $resolverContext->getSalesChannelContext()->getContext();
-            $product = $this->productRepository->searchIds(new Criteria(), $context);
-            dd($product);
+            $slot->setFieldConfig($config);
+            $context = $resolverContext->getSalesChannelContext();
+            $criteria = new Criteria();
+            $criteria->setLimit(5);
+            $criteria->addFilter(new EqualsFilter('active',1));
+            $criteria->addSorting(new FieldSorting('price.percentage.net','DESC'));
+            $products = $this->channelRepository->search($criteria,$context);
+            $slot->setData($products);
         }catch (InconsistentCriteriaIdsException $e){
 
             /**
