@@ -1,12 +1,15 @@
 {
     "sw-cms": {
-        "elements": {
-            "category": {
-                "config": {
-                    "label": {
-                        "selection": "Category"
-                    }
+        "blocks": {
+            "commerce": {
+                "discountProductSlider": {
+                    "label": "Highest Discount Product Slider"
                 }
+            }
+        },
+        "elements": {
+            "discountProductSlider": {
+                "label": "Highest Discount Product Slider"
             }
         }
     }

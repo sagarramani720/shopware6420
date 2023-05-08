@@ -7,6 +7,7 @@ use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Exception\InconsistentCriteriaIdsException;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -83,13 +84,12 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
             $slot->setFieldConfig($config);
             $context = $resolverContext->getSalesChannelContext();
             $criteria = new Criteria();
-            $criteria->setLimit(5);
+            $criteria->setLimit(10);
             $criteria->addFilter(new EqualsFilter('active',1));
             $criteria->addSorting(new FieldSorting('price.percentage.net','DESC'));
             $products = $this->channelRepository->search($criteria,$context);
             $slot->setData($products);
         }catch (InconsistentCriteriaIdsException $e){
-
             /**
             * unable to build product discount slider
             */

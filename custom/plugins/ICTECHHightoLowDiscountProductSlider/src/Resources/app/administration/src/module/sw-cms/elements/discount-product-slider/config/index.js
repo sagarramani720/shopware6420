@@ -11,7 +11,7 @@ const { Criteria, EntityCollection } = Shopware.Data;
 Component.register('sw-cms-el-config-discount-product-slider', {
     template,
 
-    inject: ['repositoryFactory', 'feature'],
+    inject: ['repositoryFactory'],
 
     mixins: [
         Mixin.getByName('cms-element'),
@@ -33,16 +33,8 @@ Component.register('sw-cms-el-config-discount-product-slider', {
                 inheritance: true,
             };
         },
-        categoryCriteria() {
-            const criteria = new Criteria(1, 25);
-            return criteria;
-        },
-        selectedCategoryCriteria() {
-            const criteria = new Criteria(1, 25);
-            return criteria;
-        },
-        isCategoryPageType() {
-            return this.cmsPageState?.currentPage?.type === 'category_detail';
+        isProductPageType() {
+            return this.cmsPageState?.currentPage?.type === 'product_detail';
         },
     },
 
@@ -51,21 +43,28 @@ Component.register('sw-cms-el-config-discount-product-slider', {
     },
 
     methods: {
+        emitChanges(content) {
+            if (content !== this.element.config.content.value) {
+                this.element.config.content.value = content;
+                this.$emit('element-update', this.element);
+            }
+        },
+
         createdComponent() {
             this.initElementConfig('discount-product-slider');
         },
-        onCategoryChange(categoryId) {
+
+        onChangeCategory(categoryId) {
             if (!categoryId) {
                 this.element.config.category.value = null;
                 this.$set(this.element.data, 'category', null);
             } else {
-                this.categoryRepository.get(categoryId, this.categorySelectContext, this.selectedCategoryCriteria)
+                this.categoryRepository.get(categoryId, this.categorySelectContext)
                     .then((category) => {
                         this.element.config.category.value = categoryId;
                         this.$set(this.element.data, 'category', category);
                     });
             }
-
             this.$emit('element-update', this.element);
         },
     },

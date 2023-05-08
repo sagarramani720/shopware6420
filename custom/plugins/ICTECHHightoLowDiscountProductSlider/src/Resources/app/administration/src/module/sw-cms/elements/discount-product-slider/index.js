@@ -58,14 +58,6 @@ Shopware.Service('cmsService').registerCmsElement({
             source: 'static',
             value: null,
         },
-        // productStreamSorting: {
-        //     source: 'static',
-        //     value: 'name:ASC',
-        // },
-        // productStreamLimit: {
-        //     source: 'static',
-        //     value: 10,
-        // },
     },
     collect: Shopware.Service('cmsService').getCollectFunction(),
 });

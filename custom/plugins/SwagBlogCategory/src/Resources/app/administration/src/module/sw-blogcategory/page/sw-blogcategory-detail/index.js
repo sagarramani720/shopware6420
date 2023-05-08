@@ -9,7 +9,6 @@ const { Component, Mixin, Data: { Criteria } } = Shopware;
 
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
-// eslint-disable-next-line sw-deprecation-rules/private-feature-declarations
 Component.register('sw-blogcategory-detail', {
     template,
 

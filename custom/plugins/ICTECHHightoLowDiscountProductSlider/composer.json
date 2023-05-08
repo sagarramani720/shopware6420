@@ -1,6 +1,6 @@
 {
   "name": "ict/ictech-high-to-low-discount-product-slider",
-  "description": "Product Slider Show High To Low Discount",
+  "description": "With the help of this plugin, the administrator can display the High To Low Discount of a specific category in a slider on any page.",
   "type": "shopware-platform-plugin",
   "version": "v1.0.0",
   "license": "MIT",

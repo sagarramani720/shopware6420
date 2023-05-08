@@ -45,20 +45,25 @@
                                 />
                             {% endblock %}
 
-                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
-                            {% block sw_cms_element_category_config_content_products %}
-                            <sw-entity-single-select
-                                v-model="element.config.category.value"
-                                entity="category"
-                                class="sw-cms-el-config-category__products"
-                                :label="$tc('sw-cms.elements.category.config.label.selection')"
-                                :placeholder="$tc('sw-cms.elements.category.config.placeholder.selection')"
-                                :criteria="categoryCriteria"
-                                :context="categorySelectContext"
-                                show-clearable-button
-                                @change="onCategoryChange"
-                            >
-                            </sw-entity-single-select>
+                            {#mapping #}
+                            {% block sw_cms_el_discount_product_slider_new_config_content %}
+                                <sw-container
+                                    v-if="active === 'content'"
+                                    class="sw-cms-el-config-text__tab-content"
+                                >
+                                    <sw-cms-mapping-slider
+                                        v-model="element.config.content"
+                                        value-types="string"
+                                    >
+                                        <div
+                                            slot="preview"
+                                            slot-scope="{ demoValueSlider }"
+                                            class="sw-cms-el-config-product-slider-new__mapping-preview"
+                                        >
+                                            <div v-html="$sanitize(demoValueSlider)"></div>
+                                        </div>
+                                    </sw-cms-mapping-slider>
+                                </sw-container>
                             {% endblock %}
 
                         </sw-container>
