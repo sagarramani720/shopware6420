@@ -45,27 +45,57 @@
                                 />
                             {% endblock %}
 
+                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+                            {% block sw_cms_element_discount_product_slider_config_content_warning_text %}
+                                <sw-alert
+                                    v-if="isProductPageType"
+                                    class="sw-cms-el-config-product-slider-new__warning-text"
+                                    variant="info"
+                                >
+                                    {{ $tc('sw-cms.elements.productSlider.productSliderNew.productNew.config.infoText.productDetailElement') }}
+                                </sw-alert>
+                            {% endblock %}
+
                             {#mapping #}
-                            {% block sw_cms_el_discount_product_slider_new_config_content %}
+                            {% block sw_cms_el_discount_product_slider_config_content %}
                                 <sw-container
                                     v-if="active === 'content'"
                                     class="sw-cms-el-config-text__tab-content"
                                 >
-                                    <sw-cms-mapping-slider
+                                    <sw-cms-mapping-field-slider
                                         v-model="element.config.content"
                                         value-types="string"
                                     >
+                                        {% block sw_cms_el_discount_product_slider_content_field %}
+                                            <sw-entity-single-select
+                                                entity="category"
+                                                v-model="element.category"
+                                                :label="$tc('sw-cms.elements.productSlider.config.label.category.title')"
+                                                @change="onChangeCategory"
+                                            >
+                                                <template #selection-label-property="{ item }">
+                                                    <slot
+                                                        name="selection-label-property"
+                                                        v-bind="{ item }"
+                                                    >
+                                                        {% block tdo_individual_offer_category_select_results %}
+                                                            {{ item.translated.name || item.name }}
+                                                        {% endblock %}
+                                                    </slot>
+                                                </template>
+                                            </sw-entity-single-select>
+                                        {% endblock %}
+
                                         <div
                                             slot="preview"
                                             slot-scope="{ demoValueSlider }"
-                                            class="sw-cms-el-config-product-slider-new__mapping-preview"
+                                            class="sw-cms-el-config-discount-product-slider__mapping-preview"
                                         >
                                             <div v-html="$sanitize(demoValueSlider)"></div>
                                         </div>
-                                    </sw-cms-mapping-slider>
+                                    </sw-cms-mapping-field-slider>
                                 </sw-container>
                             {% endblock %}
-
                         </sw-container>
                     {% endblock %}
 

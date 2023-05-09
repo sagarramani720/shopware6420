@@ -17,12 +17,6 @@ Component.register('sw-cms-el-config-discount-product-slider', {
         Mixin.getByName('cms-element'),
     ],
 
-    data() {
-        return {
-
-        };
-    },
-
     computed: {
         categoryRepository() {
             return this.repositoryFactory.create('category');
@@ -60,10 +54,10 @@ Component.register('sw-cms-el-config-discount-product-slider', {
                 this.$set(this.element.data, 'category', null);
             } else {
                 this.categoryRepository.get(categoryId, this.categorySelectContext)
-                    .then((category) => {
-                        this.element.config.category.value = categoryId;
-                        this.$set(this.element.data, 'category', category);
-                    });
+                    // .then((category) => {
+                    //     this.element.config.category.value = categoryId;
+                    //     this.$set(this.element.data, 'category', category);
+                    // });
             }
             this.$emit('element-update', this.element);
         },

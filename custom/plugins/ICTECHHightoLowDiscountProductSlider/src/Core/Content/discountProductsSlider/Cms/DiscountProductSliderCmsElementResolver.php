@@ -6,51 +6,45 @@ use Shopware\Core\Content\Cms\Aggregate\CmsSlot\CmsSlotEntity;
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
 use Shopware\Core\Content\Cms\DataResolver\Element\AbstractCmsElementResolver;
 use Shopware\Core\Content\Cms\DataResolver\Element\ElementDataCollection;
+use Shopware\Core\Content\Cms\DataResolver\ResolverContext\EntityResolverContext;
 use Shopware\Core\Content\Cms\DataResolver\ResolverContext\ResolverContext;
+use Shopware\Core\Content\Cms\SalesChannel\Struct\CrossSellingStruct;
+use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepositoryInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Exception\InconsistentCriteriaIdsException;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\Framework\Log\Package;
+use Shopware\Core\Framework\Struct\ArrayStruct;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepositoryInterface;
+use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 #[Package('inventory')]
 class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
 {
-    /**
-     * @var SystemConfigService
-     */
-
-    private SystemConfigService $systemConfigService;
-
-    /**
-     * @var EntityRepositoryInterface
-     */
-
-    private EntityRepositoryInterface $productRepository;
 
     /**
      * @var SalesChannelRepositoryInterface
      */
-
-    private SalesChannelRepositoryInterface $channelRepository;
+    private SalesChannelRepositoryInterface $productRepository;
 
     /**
-     * @param SystemConfigService $systemConfigService
-     * @param SalesChannelRepositoryInterface $channelRepository
+     * @var SystemConfigService
+     */
+    private SystemConfigService $systemConfigService;
+
+    /**
+     * @internal
      */
 
-    public function __construct(SystemConfigService $systemConfigService, SalesChannelRepositoryInterface $channelRepository)
+    public function __construct(SystemConfigService $systemConfigService, SalesChannelRepositoryInterface $productRepository)
     {
         $this->systemConfigService = $systemConfigService;
-        $this->channelRepository = $channelRepository;
+        $this->productRepository = $productRepository;
     }
-
-    /**
-     * @return string
-     */
 
     public function getType(): string
     {
@@ -79,20 +73,36 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
 
     public function enrich(CmsSlotEntity $slot, ResolverContext $resolverContext, ElementDataCollection $result): void
     {
-        try {
             $config = $slot->getFieldConfig();
-            $slot->setFieldConfig($config);
             $context = $resolverContext->getSalesChannelContext();
+            $slot->setFieldConfig($config);
+            $struct = new CrossSellingStruct();
+            $slot->setData($struct);
+
+            $configContent = $slot->getFieldConfig()->get('content');
+            if ($configContent->isMapped() && $resolverContext instanceof EntityResolverContext) {
+                $categoryId = $this->resolveEntityValueToString($resolverContext->getEntity(), $configContent->getStringValue(), $resolverContext);
+            }
+
+
+            if ($configContent->isStatic()) {
+                if ($resolverContext instanceof EntityResolverContext) {
+                    $categoryId = (string) $this->resolveEntityValues($resolverContext, $configContent->getStringValue());
+                } else {
+                    $categoryId = $configContent->getStringValue();
+                }
+            }
+
+        $productsIsNew = null;
             $criteria = new Criteria();
+            $criteria->addFilter(
+                new EqualsAnyFilter('categoryTree', [$categoryId]),
+            );
+            $criteria->addAssociation('options.group');
             $criteria->setLimit(10);
             $criteria->addFilter(new EqualsFilter('active',1));
             $criteria->addSorting(new FieldSorting('price.percentage.net','DESC'));
-            $products = $this->channelRepository->search($criteria,$context);
-            $slot->setData($products);
-        }catch (InconsistentCriteriaIdsException $e){
-            /**
-            * unable to build product discount slider
-            */
-        }
+            $products = $this->productRepository->search($criteria, $context)->getElements();
+            $slot->setData(new ArrayStruct(['products'=>array_slice($products,0),'configElements'=>$config]));
     }
 }

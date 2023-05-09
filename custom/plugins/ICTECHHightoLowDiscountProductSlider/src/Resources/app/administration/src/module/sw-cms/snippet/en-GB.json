@@ -10,6 +10,15 @@
         "elements": {
             "discountProductSlider": {
                 "label": "Highest Discount Product Slider"
+            },
+            "productSlider": {
+                "config": {
+                    "label": {
+                        "category": {
+                            "title": "category"
+                        }
+                    }
+                }
             }
         }
     }

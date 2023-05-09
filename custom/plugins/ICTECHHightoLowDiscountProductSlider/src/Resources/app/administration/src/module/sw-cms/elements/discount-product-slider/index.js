@@ -1,7 +1,6 @@
 import './component';
 import './config';
 import './preview';
-
 const Criteria = Shopware.Data.Criteria;
 const criteria = new Criteria(1, 25);
 
@@ -9,7 +8,6 @@ const criteria = new Criteria(1, 25);
  * @private since v6.5.0
  * @package content
  */
-
 Shopware.Service('cmsService').registerCmsElement({
     name: 'discount-product-slider',
     label: 'sw-cms.elements.discountProductSlider.label',
@@ -19,7 +17,7 @@ Shopware.Service('cmsService').registerCmsElement({
     defaultConfig: {
         category: {
             source: 'static',
-            value: '',
+            value: null,
             required: false,
             entity: {
                 name: 'category',
@@ -55,6 +53,14 @@ Shopware.Service('cmsService').registerCmsElement({
             value: '300px',
         },
         verticalAlign: {
+            source: 'static',
+            value: null,
+        },
+        sliderTitle: {
+            source: 'static',
+            value: null,
+        },
+        content: {
             source: 'static',
             value: null,
         },

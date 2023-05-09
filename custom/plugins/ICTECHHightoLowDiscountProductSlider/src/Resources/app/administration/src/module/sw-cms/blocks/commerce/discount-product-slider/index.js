@@ -20,6 +20,6 @@ Shopware.Service('cmsService').registerCmsBlock({
         sizingMode: 'boxed',
     },
     slots: {
-        discountProductSlider: 'discount-product-slider',
+        content: 'discount-product-slider',
     },
 });
