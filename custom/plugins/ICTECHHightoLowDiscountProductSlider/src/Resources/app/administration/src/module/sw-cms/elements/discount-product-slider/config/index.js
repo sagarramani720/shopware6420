@@ -2,11 +2,10 @@ import template from './sw-cms-el-config-discount-product-slider.html.twig';
 import './sw-cms-el-config-discount-product-slider.scss';
 
 const { Component, Mixin } = Shopware;
-const { Criteria, EntityCollection } = Shopware.Data;
+const { Criteria } = Shopware.Data;
 
 /**
  * @private since v6.5.0
- * @package content
  */
 Component.register('sw-cms-el-config-discount-product-slider', {
     template,
@@ -31,7 +30,6 @@ Component.register('sw-cms-el-config-discount-product-slider', {
             return this.cmsPageState?.currentPage?.type === 'product_detail';
         },
     },
-
     created() {
         this.createdComponent();
     },
@@ -54,10 +52,10 @@ Component.register('sw-cms-el-config-discount-product-slider', {
                 this.$set(this.element.data, 'category', null);
             } else {
                 this.categoryRepository.get(categoryId, this.categorySelectContext)
-                    // .then((category) => {
-                    //     this.element.config.category.value = categoryId;
-                    //     this.$set(this.element.data, 'category', category);
-                    // });
+                    .then((category) => {
+                        this.element.config.category.value = categoryId;
+                        this.$set(this.element.data, 'category', category);
+                    });
             }
             this.$emit('element-update', this.element);
         },

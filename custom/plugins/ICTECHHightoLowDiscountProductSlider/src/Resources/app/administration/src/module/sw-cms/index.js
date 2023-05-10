@@ -1,3 +1,3 @@
-import './blocks';
 import './elements';
+import './blocks';
 import './component';

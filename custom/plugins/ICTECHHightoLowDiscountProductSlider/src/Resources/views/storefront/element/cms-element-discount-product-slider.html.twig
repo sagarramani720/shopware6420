@@ -24,61 +24,59 @@
                         }
                     } %}
 
-                    {% block element_discount_product_slider_slider %}
-                        <div
-                            class="base-slider product-slider{% if sliderConfig.border.value %} has-border{% endif %}{% if sliderConfig.navigation.value %} has-nav{% endif %}"
-                            data-product-slider="true"
-                            data-product-slider-options="{{ productSliderOptions|json_encode }}">
+                    {% block cms_element_discount_product_slider_tabs_content %}
+                        <div class="product-detail-tabs-content card-body">
+                            {% block cms_element_discount_product_slider_tabs_content_container %}
+                                <div class="tab-content">
+                                    {% set products = element.data.products %}
+                                    <div class=""
+                                         role="tabpanel"
+                                         aria-labelledby="cross-selling-tab-">
+                                        {% set config = {
+                                            'title': {
+                                                'value': element.data.configElements.elements.sliderTitle.value ?: element.data.configElements.elements.sliderTitle.value
+                                            },
+                                            'border': {
+                                                'value': false
+                                            },
+                                            'rotate': {
+                                                'value': false
+                                            },
+                                            'products': {
+                                                'value': products
+                                            },
+                                            'boxLayout': {
+                                                'value': element.data.configElements.elements.boxLayout.value
+                                            },
+                                            'elMinWidth': {
+                                                'value': element.data.configElements.elements.elMinWidth.value
+                                            },
+                                            'navigation': {
+                                                'value': true
+                                            },
+                                            'displayMode': {
+                                                'value': element.data.configElements.elements.displayMode.value
+                                            },
+                                            'verticalAlign': {
+                                                'value': center
+                                            }
+                                        } %}
 
-                            {% block element_product_slider_title %}
-                                {% if sliderConfig.title.value %}
-                                    <div class="cms-element-title">
-                                        <p class="cms-element-title-paragraph">{{ sliderConfig.title.value }}</p>
+                                        {% block cms_element_discount_product_slider_tabs_content_container_slider %}
+                                            {% sw_include "@Storefront/storefront/element/cms-element-product-slider.html.twig" with {
+                                                sliderConfig: config,
+                                                element: {
+                                                    'data': {
+                                                        'products': {
+                                                            'elements': products,
+                                                        },
+                                                    },
+                                                    type: 'product-slider'
+                                                }
+                                            } %}
+                                        {% endblock %}
                                     </div>
-                                {% endif %}
-                            {% endblock %}
-
-                            {% block element_discount_product_slider_inner %}
-                                {% block element_discount_product_slider_element %}
-                                    <div class="product-slider-container"
-                                         data-product-slider-container="true">
-                                        {% for product in element.data.products %}
-                                            {% block element_discount_product_slider_inner_item %}
-                                                <div class="product-slider-item">
-                                                    {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
-                                                        'layout': sliderConfig.boxLayout.value,
-                                                        'displayMode': sliderConfig.displayMode.value,
-
-                                                    } %}
-                                                </div>
-                                            {% endblock %}
-                                        {% endfor %}
-                                    </div>
-                                {% endblock %}
-
-                                {% block element_discount_product_slider_controls %}
-                                    {% if sliderConfig.navigation.value %}
-                                        <div class="product-slider-controls-container">
-                                            <div class="base-slider-controls"
-                                                 data-product-slider-controls="true">
-                                                {% block element_discount_product_slider_controls_items %}
-                                                    <button
-                                                        class="base-slider-controls-prev product-slider-controls-prev{% if sliderConfig.border.value %} has-border{% endif %}">
-                                                        {% block element_discount_product_slider_controls_items_prev_icon %}
-                                                            {% sw_icon 'arrow-head-left' %}
-                                                        {% endblock %}
-                                                    </button>
-                                                    <button
-                                                        class="base-slider-controls-next product-slider-controls-next{% if sliderConfig.border.value %} has-border{% endif %}">
-                                                        {% block element_discount_product_slider_controls_items_next_icon %}
-                                                            {% sw_icon 'arrow-head-right' %}
-                                                        {% endblock %}
-                                                    </button>
-                                                {% endblock %}
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                {% endblock %}
+                                </div>
                             {% endblock %}
                         </div>
                     {% endblock %}

@@ -16,6 +16,7 @@
                             {{ $tc('sw-cms.elements.general.config.tab.content') }}
                         </sw-tabs-item>
                     {% endblock %}
+
                     {% block sw_cms_element_discount_product_slider_config_tab_options %}
                         <sw-tabs-item
                             :title="$tc('sw-cms.elements.general.config.tab.settings')"
@@ -27,25 +28,12 @@
                     {% endblock %}
                 </template>
 
-                <template
-                    slot="content"
-                    slot-scope="{ active }"
-                >
+                <template #content="{ active }">
                     {% block sw_cms_element_discount_product_slider_config_content %}
                         <sw-container
                             v-if="active === 'content'"
                             class="sw-cms-el-config-discount-product-slider__tab-content"
                         >
-                            {% block sw_cms_element_discount_product_slider_config_content_title %}
-                                <sw-field
-                                    v-model="element.config.title.value"
-                                    type="text"
-                                    :label="$tc('sw-cms.elements.productSlider.config.label.title')"
-                                    :placeholder="$tc('sw-cms.elements.productSlider.config.placeholder.title')"
-                                />
-                            {% endblock %}
-
-                            <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
                             {% block sw_cms_element_discount_product_slider_config_content_warning_text %}
                                 <sw-alert
                                     v-if="isProductPageType"
@@ -56,6 +44,14 @@
                                 </sw-alert>
                             {% endblock %}
 
+                            {% block sw_cms_element_discount_product_slider_config_content_title %}
+                                <sw-field
+                                    v-model="element.config.title.value"
+                                    type="text"
+                                    :label="$tc('sw-cms.elements.productSlider.config.label.title')"
+                                    :placeholder="$tc('sw-cms.elements.productSlider.config.placeholder.title')"
+                                />
+                            {% endblock %}
                             {#mapping #}
                             {% block sw_cms_el_discount_product_slider_config_content %}
                                 <sw-container
@@ -69,8 +65,8 @@
                                         {% block sw_cms_el_discount_product_slider_content_field %}
                                             <sw-entity-single-select
                                                 entity="category"
-                                                v-model="element.category"
-                                                :label="$tc('sw-cms.elements.productSlider.config.label.category.title')"
+                                                size="medium"
+                                                v-model="category"
                                                 @change="onChangeCategory"
                                             >
                                                 <template #selection-label-property="{ item }">
@@ -89,12 +85,19 @@
                                         <div
                                             slot="preview"
                                             slot-scope="{ demoValueSlider }"
-                                            class="sw-cms-el-config-discount-product-slider__mapping-preview"
+                                            class="sw-cms-el-config-product-slider-new__mapping-preview"
                                         >
                                             <div v-html="$sanitize(demoValueSlider)"></div>
                                         </div>
                                     </sw-cms-mapping-field-slider>
                                 </sw-container>
+                            {% endblock %}
+                            {% block  sw_cms_element_discount_product_slider_config_slider_total_number%}
+                                <sw-number-field
+                                    v-model="element.config.totalNumber.value"
+                                    :label="$tc('sw-cms.elements.productSlider.discountProductSlider.config.label.totalNumber')"
+                                    :placeholder="$tc('sw-cms.elements.productSlider.discountProductSlider.config.placeholder.totalNumber')"
+                                />
                             {% endblock %}
                         </sw-container>
                     {% endblock %}
@@ -104,7 +107,6 @@
                             v-if="active === 'settings'"
                             class="sw-cms-el-config-discount-product-slider__tab-settings"
                         >
-
                             {% block sw_cms_element_discount_product_slider_config_settings_display_mode %}
                                 <sw-select-field
                                     v-model="element.config.displayMode.value"

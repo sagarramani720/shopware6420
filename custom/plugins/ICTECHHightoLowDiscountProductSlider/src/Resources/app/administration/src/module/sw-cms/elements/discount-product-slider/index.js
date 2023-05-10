@@ -1,13 +1,16 @@
 import './component';
 import './config';
 import './preview';
+
 const Criteria = Shopware.Data.Criteria;
 const criteria = new Criteria(1, 25);
+criteria.addAssociation('cover');
 
 /**
  * @private since v6.5.0
  * @package content
  */
+
 Shopware.Service('cmsService').registerCmsElement({
     name: 'discount-product-slider',
     label: 'sw-cms.elements.discountProductSlider.label',
@@ -57,6 +60,10 @@ Shopware.Service('cmsService').registerCmsElement({
             value: null,
         },
         sliderTitle: {
+            source: 'static',
+            value: null,
+        },
+        totalNumber: {
             source: 'static',
             value: null,
         },

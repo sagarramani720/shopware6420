@@ -76,14 +76,16 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
             $config = $slot->getFieldConfig();
             $context = $resolverContext->getSalesChannelContext();
             $slot->setFieldConfig($config);
-            $struct = new CrossSellingStruct();
-            $slot->setData($struct);
+//            $struct = new CrossSellingStruct();
+//            $slot->setData($struct);
+
+            $productLimit = $slot->getFieldConfig()->get('totalNumber');
+            $limit = (int)$productLimit->getValue();
 
             $configContent = $slot->getFieldConfig()->get('content');
             if ($configContent->isMapped() && $resolverContext instanceof EntityResolverContext) {
                 $categoryId = $this->resolveEntityValueToString($resolverContext->getEntity(), $configContent->getStringValue(), $resolverContext);
             }
-
 
             if ($configContent->isStatic()) {
                 if ($resolverContext instanceof EntityResolverContext) {
@@ -93,16 +95,47 @@ class DiscountProductSliderCmsElementResolver extends AbstractCmsElementResolver
                 }
             }
 
-        $productsIsNew = null;
+            if ($limit === 0) {
+                return;
+            }
+            $productsIsNew = null;
+
             $criteria = new Criteria();
             $criteria->addFilter(
                 new EqualsAnyFilter('categoryTree', [$categoryId]),
             );
             $criteria->addAssociation('options.group');
-            $criteria->setLimit(10);
+//            $criteria->setLimit(5);
             $criteria->addFilter(new EqualsFilter('active',1));
             $criteria->addSorting(new FieldSorting('price.percentage.net','DESC'));
             $products = $this->productRepository->search($criteria, $context)->getElements();
-            $slot->setData(new ArrayStruct(['products'=>array_slice($products,0),'configElements'=>$config]));
+            if ($products === null) {
+                return;
+            }
+            $slot->setData(new ArrayStruct(['products'=>array_slice($products,0,$limit),'configElements'=>$config]));
+
+//            //check is new product
+//            foreach ($products as $product){
+//                if($this->isNew($product, $context)){
+//                    $productsIsNew[] = $product;
+//                }
+//            }
+//            if ($productsIsNew === null) {
+//                return;
+//            }
+
     }
+//    public function isNew(Entity $product, SalesChannelContext $context): bool
+//    {
+//        $markAsNewDayRange = $this->systemConfigService->get(
+//            'core.listing.markAsNew',
+//            $context->getSalesChannel()->getId()
+//        );
+//        $now = new \DateTime();
+//        /** @var \DateTimeInterface|null $releaseDate */
+//        $releaseDate = $product->get('releaseDate');
+//
+//        return $releaseDate instanceof \DateTimeInterface
+//            && $releaseDate->diff($now)->days <= $markAsNewDayRange;
+//    }
 }

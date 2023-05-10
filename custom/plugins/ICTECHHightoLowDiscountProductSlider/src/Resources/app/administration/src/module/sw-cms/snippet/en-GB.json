@@ -13,9 +13,26 @@
             },
             "productSlider": {
                 "config": {
+                    "category": {
+                        "label": "Category"
+                    },
                     "label": {
+                        "title": "Title"
+                    },
+                    "placeholder": {
+                        "title": "Enter Slider Title"
+                    }
+                },
+                "discountProductSlider": {
+                    "config": {
+                        "label": {
+                            "totalNumber": "Total Number"
+                        },
+                        "placeholder": {
+                            "totalNumber": "Enter Total Number"
+                        },
                         "category": {
-                            "title": "category"
+                            "label": "Category"
                         }
                     }
                 }
