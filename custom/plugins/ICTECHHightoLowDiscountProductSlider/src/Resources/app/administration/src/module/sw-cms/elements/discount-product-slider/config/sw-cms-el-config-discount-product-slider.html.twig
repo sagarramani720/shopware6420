@@ -28,7 +28,10 @@
                     {% endblock %}
                 </template>
 
-                <template #content="{ active }">
+                <template
+                    slot="content"
+                    slot-scope="{ active }"
+                >
                     {% block sw_cms_element_discount_product_slider_config_content %}
                         <sw-container
                             v-if="active === 'content'"

@@ -10,7 +10,6 @@ criteria.addAssociation('cover');
  * @private since v6.5.0
  * @package content
  */
-
 Shopware.Service('cmsService').registerCmsElement({
     name: 'discount-product-slider',
     label: 'sw-cms.elements.discountProductSlider.label',
